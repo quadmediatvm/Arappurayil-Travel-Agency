@@ -35,8 +35,8 @@
                             goldDark: '#B88636',
                             goldSoft: '#E7C888',
                             darkBg: '#070A0F',
-                            card: '#0F141B',
-                            cardLine: '#1B222C',
+                            card: '#0B0F17',
+                            cardLine: '#161D28',
                             emerald: '#2F6F5E',
                             emeraldLight: '#4C9A83',
                             ivory: '#F4F0E6',
@@ -63,7 +63,7 @@
         .fade-in-up { opacity: 0; transform: translateY(28px); transition: opacity 0.8s ease-out, transform 0.8s ease-out; }
         .fade-in-up.visible { opacity: 1; transform: translateY(0); }
         .grain::before {
-            content: ""; position: absolute; inset: 0; pointer-events: none; opacity: 0.05; mix-blend-mode: overlay;
+            content: ""; position: absolute; inset: 0; pointer-events: none; opacity: 0.03; mix-blend-mode: overlay;
             background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
         }
         .route-path { stroke-dasharray: 6 10; stroke-dashoffset: 1000; transition: stroke-dashoffset 2.2s ease-out; }
@@ -72,29 +72,37 @@
             .fade-in-up, .route-path { transition: none !important; opacity: 1 !important; transform: none !important; }
         }
         .lightbox-img { max-height: 82vh; }
-        #lightbox { backdrop-filter: blur(6px); }
+        #lightbox { backdrop-filter: blur(12px); }
     </style>
 </head>
 <body class="bg-brand-darkBg text-white font-sans antialiased overflow-x-hidden min-h-screen selection:bg-brand-gold selection:text-brand-darkBg">
 
+    <!-- Cinematic Preloader -->
+    <div id="preloader" class="fixed inset-0 bg-[#070A0F] z-[100] flex flex-col justify-center items-center pointer-events-auto transition-opacity duration-700 ease-out">
+        <div class="max-w-md w-full px-8 text-center space-y-6">
+            <h2 class="font-serif text-2xl md:text-3xl tracking-[0.25em] font-bold text-brand-gold uppercase">Arappurayil</h2>
+            <p class="text-[10px] tracking-[0.4em] text-white/60 uppercase font-semibold">Travel Agency</p>
+            <div class="w-full bg-white/[0.05] h-[2px] mt-4 relative overflow-hidden">
+                <div id="loader-bar" class="absolute top-0 left-0 h-full w-0 bg-brand-gold transition-all duration-[2000ms] ease-out"></div>
+            </div>
+        </div>
+    </div>
+
     <!-- Header / Navigation -->
-    <header id="main-header" class="fixed top-0 left-0 w-full z-50 transition-all duration-500 bg-brand-darkBg/60 backdrop-blur-xl border-b border-white/10">
+    <header id="main-header" class="fixed top-0 left-0 w-full z-50 transition-all duration-500 bg-brand-darkBg/40 backdrop-blur-xl border-b border-white/[0.05]">
         <div class="max-w-7xl mx-auto px-6 h-20 md:h-24 flex items-center justify-between">
             <a href="#home" class="flex items-center space-x-3 group drop-shadow-[0_2px_8px_rgba(0,0,0,0.8)]">
+                <!-- Agency Custom Logo Incorporation -->
+                <div class="w-12 h-12 rounded-full overflow-hidden border border-brand-gold/40 flex-shrink-0 bg-[#0A0F18]">
+                    <img src="logo.jpg" alt="Arappurayil Travel Logo" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" onerror="this.style.display='none'">
+                </div>
                 <div class="flex flex-col text-left">
-                    <div class="flex items-center space-x-2">
-                        <svg class="w-7 h-7 text-brand-gold group-hover:rotate-45 transition-transform duration-700" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <circle cx="12" cy="12" r="10" />
-                            <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" />
-                            <path d="M2 12h20" />
-                        </svg>
-                        <span class="font-serif text-lg md:text-xl tracking-[0.25em] font-bold text-brand-gold uppercase transition-colors duration-300">Arappurayil</span>
-                    </div>
-                    <span class="text-[9px] tracking-[0.38em] text-white uppercase font-bold pl-9 -mt-0.5 opacity-90">Travel Agency · Est. Trivandrum</span>
+                    <span class="font-serif text-lg md:text-xl tracking-[0.22em] font-bold text-brand-gold uppercase transition-colors duration-300">Arappurayil</span>
+                    <span class="text-[9px] tracking-[0.32em] text-white uppercase font-bold opacity-90">Travel Agency · Est. Trivandrum</span>
                 </div>
             </a>
 
-            <nav class="hidden md:flex items-center space-x-10 text-xs tracking-[0.2em] font-bold uppercase text-white drop-shadow-[0_2px_5px_rgba(0,0,0,0.9)]">
+            <nav class="hidden md:flex items-center space-x-10 text-xs tracking-[0.22em] font-semibold uppercase text-white/90 drop-shadow-[0_2px_5px_rgba(0,0,0,0.9)]">
                 <a href="#home" class="text-brand-gold relative transition-colors duration-300">Home</a>
                 <a href="#gallery" class="hover:text-brand-gold transition-colors duration-300">Gallery</a>
                 <a href="#destinations" class="hover:text-brand-gold transition-colors duration-300">Destinations</a>
@@ -102,7 +110,7 @@
             </nav>
 
             <div class="flex items-center space-x-4">
-                <a href="https://wa.me/916238305540" target="_blank" class="hidden sm:inline-flex items-center space-x-2 bg-brand-gold text-brand-darkBg hover:bg-brand-goldDark transition-all duration-300 px-5 py-2.5 rounded-full text-xs font-bold tracking-[0.15em] uppercase shadow-[0_4px_15px_rgba(212,163,79,0.4)]">
+                <a href="https://wa.me/916238305540" target="_blank" class="hidden sm:inline-flex items-center space-x-2 bg-brand-gold text-brand-darkBg hover:bg-brand-goldDark transition-all duration-500 px-6 py-3 rounded-full text-xs font-bold tracking-[0.15em] uppercase shadow-[0_4px_20px_rgba(212,163,79,0.2)]">
                     <span>Plan My Trip</span>
                 </a>
                 <button id="menu-btn" aria-label="Menu" class="md:hidden flex flex-col justify-between w-6 h-5 text-brand-gold focus:outline-none z-50 drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]">
@@ -123,7 +131,7 @@
         <a href="https://wa.me/916238305540" target="_blank" class="mobile-link inline-flex border border-brand-gold text-brand-gold px-6 py-3 rounded-full text-xs font-bold tracking-[0.15em]">WhatsApp Us</a>
     </div>
 
-    <!-- Hero Section: video renders full-bleed on every breakpoint -->
+    <!-- Hero Section -->
     <section id="home" class="relative h-[100svh] min-h-[560px] w-full overflow-hidden bg-brand-darkBg">
         <video autoplay loop muted playsinline preload="auto" class="absolute inset-0 w-full h-full object-cover object-center">
             <source src="Herovideo.mp4?v=2" type="video/mp4">
@@ -163,211 +171,158 @@
                 </div>
             </div>
         </div>
-
-        <a href="#gallery" class="hidden md:flex absolute bottom-6 right-8 z-10 flex-col items-center gap-2 text-[10px] tracking-[0.3em] uppercase text-white/70 hover:text-brand-gold transition-colors">
-            <span class="[writing-mode:vertical-rl]">Scroll</span>
-            <span class="w-px h-10 bg-gradient-to-b from-brand-gold to-transparent"></span>
-        </a>
     </section>
 
     <!-- Route Divider 1 -->
-    <div class="relative bg-[#090d12] py-8 md:py-10 border-b border-white/5 overflow-hidden">
-        <div class="max-w-5xl mx-auto px-6 flex items-center gap-3 sm:gap-4 md:gap-8">
-            <span class="text-[9px] sm:text-[10px] md:text-xs uppercase tracking-[0.2em] md:tracking-[0.25em] text-brand-gold font-bold whitespace-nowrap">Kerala Backwaters</span>
-            <svg class="flex-1 h-6" viewBox="0 0 600 24" preserveAspectRatio="none" fill="none">
-                <path class="route-path route-observe" d="M0 12 L600 12" stroke="#D4A34F" stroke-width="1.5" stroke-linecap="round"/>
+    <div class="relative bg-[#0A0F18] py-10 border-b border-white/[0.03] overflow-hidden">
+        <div class="max-w-5xl mx-auto px-6 flex items-center gap-4 md:gap-8">
+            <span class="text-[10px] md:text-xs uppercase tracking-[0.25em] text-brand-gold/80 font-semibold whitespace-nowrap">Kerala Backwaters</span>
+            <svg class="flex-1 h-6 opacity-40" viewBox="0 0 600 24" preserveAspectRatio="none" fill="none">
+                <path class="route-path route-observe" d="M0 12 L600 12" stroke="#D4A34F" stroke-width="1" stroke-linecap="round"/>
             </svg>
-            <svg class="w-5 h-5 text-brand-gold shrink-0 -rotate-0" viewBox="0 0 24 24" fill="currentColor"><path d="M21 16v-2l-8-5V3.5a1.5 1.5 0 0 0-3 0V9l-8 5v2l8-2.5V19l-2.5 1.5V22l4-1 4 1v-1.5L13 19v-5.5l8 2.5z"/></svg>
-            <span class="text-[9px] sm:text-[10px] md:text-xs uppercase tracking-[0.2em] md:tracking-[0.25em] text-brand-gold font-bold whitespace-nowrap">Kashmir Valleys</span>
+            <svg class="w-4 h-4 text-brand-gold/60 shrink-0" viewBox="0 0 24 24" fill="currentColor"><path d="M21 16v-2l-8-5V3.5a1.5 1.5 0 0 0-3 0V9l-8 5v2l8-2.5V19l-2.5 1.5V22l4-1 4 1v-1.5L13 19v-5.5l8 2.5z"/></svg>
+            <span class="text-[10px] md:text-xs uppercase tracking-[0.25em] text-brand-gold/80 font-semibold whitespace-nowrap">Kashmir Valleys</span>
         </div>
     </div>
 
-    <!-- Stats Strip -->
-    <section class="bg-[#090d12] py-14 md:py-16 border-b border-white/5">
-        <div class="max-w-6xl mx-auto px-6 grid grid-cols-2 md:grid-cols-4 gap-8 text-center fade-in-up">
-            <div>
-                <p class="font-serif text-3xl md:text-5xl text-brand-gold font-bold"><span class="counter" data-target="5000">0</span>+</p>
-                <p class="text-[10px] md:text-xs uppercase tracking-[0.2em] text-gray-400 mt-2 font-semibold">Happy Travelers</p>
-            </div>
-            <div>
-                <p class="font-serif text-3xl md:text-5xl text-brand-gold font-bold"><span class="counter" data-target="13">0</span>+</p>
-                <p class="text-[10px] md:text-xs uppercase tracking-[0.2em] text-gray-400 mt-2 font-semibold">Destinations</p>
-            </div>
-            <div>
-                <p class="font-serif text-3xl md:text-5xl text-brand-gold font-bold"><span class="counter" data-target="2">0</span></p>
-                <p class="text-[10px] md:text-xs uppercase tracking-[0.2em] text-gray-400 mt-2 font-semibold">Regional Offices</p>
-            </div>
-            <div>
-                <p class="font-serif text-3xl md:text-5xl text-brand-gold font-bold">24/7</p>
-                <p class="text-[10px] md:text-xs uppercase tracking-[0.2em] text-gray-400 mt-2 font-semibold">Concierge Support</p>
-            </div>
-        </div>
-    </section>
-
     <!-- Gallery Section -->
-    <section id="gallery" class="py-20 md:py-24 bg-[#090d12] border-b border-white/5">
+    <section id="gallery" class="py-24 md:py-32 bg-[#05070B] border-b border-white/[0.03]">
         <div class="max-w-7xl mx-auto px-6">
-            <div class="text-center mb-14 md:mb-16 fade-in-up">
-                <span class="text-brand-gold text-xs font-bold tracking-[0.3em] uppercase mb-3 block">Visual Experience</span>
-                <h2 class="font-serif text-3xl sm:text-4xl md:text-5xl text-white">Our Journey Gallery</h2>
-                <div class="w-24 h-1 bg-brand-gold mx-auto mt-6 rounded-full opacity-80"></div>
-                <p class="text-gray-400 text-xs md:text-sm mt-4">Tap any photo to view it full size</p>
+            <div class="text-center mb-16 md:mb-20 fade-in-up">
+                <span class="text-brand-gold text-xs font-bold tracking-[0.35em] uppercase mb-4 block">Visual Experience</span>
+                <h2 class="font-serif text-3xl sm:text-4xl md:text-5xl tracking-wide text-white">Our Journey Gallery</h2>
+                <div class="w-12 h-[2px] bg-brand-gold/60 mx-auto mt-6"></div>
+                <p class="text-gray-400 text-xs tracking-widest uppercase mt-4 opacity-75">Tap any frame to expand view</p>
             </div>
 
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 md:gap-6 auto-rows-fr fade-in-up" id="gallery-grid"></div>
+            <!-- Enhanced Masonry / Asymmetric Grid Handling Vertical First Aspect Item -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 auto-rows-fr fade-in-up" id="gallery-grid"></div>
         </div>
     </section>
 
     <!-- Lightbox Modal -->
-    <div id="lightbox" class="fixed inset-0 z-[60] hidden items-center justify-center bg-black/90 p-4 md:p-10">
-        <button onclick="closeLightbox()" aria-label="Close" class="absolute top-5 right-5 md:top-8 md:right-8 text-white/80 hover:text-brand-gold transition-colors">
-            <svg class="w-8 h-8" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
+    <div id="lightbox" class="fixed inset-0 z-[60] hidden items-center justify-center bg-brand-darkBg/95 p-4 md:p-10">
+        <button onclick="closeLightbox()" aria-label="Close" class="absolute top-5 right-5 md:top-8 md:right-8 text-white/60 hover:text-brand-gold transition-colors">
+            <svg class="w-8 h-8" fill="none" stroke="currentColor" stroke-width="1" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
         </button>
-        <button onclick="navLightbox(-1)" aria-label="Previous" class="absolute left-2 md:left-8 top-1/2 -translate-y-1/2 text-white/70 hover:text-brand-gold transition-colors">
-            <svg class="w-9 h-9 md:w-10 md:h-10" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"/></svg>
+        <button onclick="navLightbox(-1)" aria-label="Previous" class="absolute left-2 md:left-8 top-1/2 -translate-y-1/2 text-white/40 hover:text-brand-gold transition-colors">
+            <svg class="w-10 h-10" fill="none" stroke="currentColor" stroke-width="1" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"/></svg>
         </button>
-        <button onclick="navLightbox(1)" aria-label="Next" class="absolute right-2 md:right-8 top-1/2 -translate-y-1/2 text-white/70 hover:text-brand-gold transition-colors">
-            <svg class="w-9 h-9 md:w-10 md:h-10" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
+        <button onclick="navLightbox(1)" aria-label="Next" class="absolute right-2 md:right-8 top-1/2 -translate-y-1/2 text-white/40 hover:text-brand-gold transition-colors">
+            <svg class="w-10 h-10" fill="none" stroke="currentColor" stroke-width="1" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
         </button>
-        <img id="lightbox-img" src="" alt="" class="lightbox-img max-w-full rounded-lg shadow-2xl">
+        <img id="lightbox-img" src="" alt="" class="lightbox-img max-w-full rounded-none border border-white/10 shadow-2xl">
     </div>
 
-    <!-- Top Destinations Grid Section -->
-    <section id="destinations" class="py-20 md:py-24 bg-brand-darkBg">
+    <!-- Compact Optimized Top Destinations Section -->
+    <section id="destinations" class="py-24 md:py-32 bg-[#0A0F18] border-b border-white/[0.02]">
         <div class="max-w-7xl mx-auto px-6">
-            <div class="text-center mb-14 md:mb-16 fade-in-up">
-                <span class="text-brand-gold text-xs font-bold tracking-[0.3em] uppercase mb-3 block">Curated Escapes</span>
-                <h2 class="font-serif text-3xl sm:text-4xl md:text-5xl text-white">Top Destinations</h2>
-                <div class="w-24 h-1 bg-brand-gold mx-auto mt-6 rounded-full opacity-80"></div>
+            <div class="text-center mb-16 md:mb-20 fade-in-up">
+                <span class="text-brand-gold text-xs font-bold tracking-[0.35em] uppercase mb-4 block">Curated Escapes</span>
+                <h2 class="font-serif text-3xl sm:text-4xl md:text-5xl tracking-wide text-white">Top Destinations</h2>
+                <div class="w-12 h-[2px] bg-brand-gold/60 mx-auto mt-6"></div>
             </div>
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 md:gap-8" id="destination-grid"></div>
+            
+            <!-- Highly Compact Grid Layout Structure -->
+            <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4" id="destination-grid"></div>
         </div>
     </section>
 
-    <!-- CTA Banner -->
-    <section class="relative py-16 md:py-20 bg-[#090d12] border-y border-white/5 overflow-hidden grain">
-        <div class="absolute -top-24 -left-24 w-72 h-72 rounded-full bg-brand-gold/10 blur-3xl"></div>
-        <div class="absolute -bottom-24 -right-24 w-72 h-72 rounded-full bg-brand-emerald/10 blur-3xl"></div>
-        <div class="relative max-w-4xl mx-auto px-6 text-center fade-in-up">
-            <h2 class="font-serif text-2xl sm:text-3xl md:text-5xl text-white mb-5">Your next journey is one message away</h2>
-            <p class="text-gray-400 text-sm md:text-base max-w-xl mx-auto mb-9 font-light">Tell us where you'd like to go and a planner will build a custom itinerary and pricing — usually within the hour.</p>
-            <a href="https://wa.me/916238305540?text=I%20want%20to%20plan%20a%20trip" target="_blank" class="inline-flex items-center space-x-3 bg-brand-gold hover:bg-brand-goldDark text-brand-darkBg font-bold text-xs uppercase tracking-wider px-8 py-4 rounded-full transition-all duration-300 shadow-[0_4px_20px_rgba(212,163,79,0.35)]">
-                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-                <span>Start Planning on WhatsApp</span>
-            </a>
-        </div>
-    </section>
-
-    <!-- Contact Section -->
-    <section id="contact" class="py-20 md:py-24 bg-[#0a0e14] border-b border-white/5 relative">
+    <!-- Contact Directory -->
+    <section id="contact" class="py-24 md:py-32 bg-[#05070B] border-b border-white/[0.03]">
         <div class="max-w-4xl mx-auto px-6">
-            <div class="text-center mb-12 fade-in-up">
-                <span class="text-brand-gold text-xs font-bold tracking-[0.3em] uppercase mb-3 block">Get In Touch</span>
-                <h2 class="font-serif text-3xl sm:text-4xl text-white">Interactive HQ Directory</h2>
+            <div class="text-center mb-14 fade-in-up">
+                <span class="text-brand-gold text-xs font-bold tracking-[0.35em] uppercase mb-4 block">Get In Touch</span>
+                <h2 class="font-serif text-3xl sm:text-4xl text-white tracking-wide">Interactive HQ Directory</h2>
             </div>
 
-            <div class="flex justify-center bg-white/5 border border-white/10 rounded-full p-1.5 max-w-sm mx-auto mb-12 fade-in-up">
-                <button id="tab-btn-kerala" onclick="switchOfficeTab('kerala')" class="flex-1 text-xs uppercase tracking-wider py-3 rounded-full font-bold transition-all duration-300 bg-brand-gold text-brand-darkBg">
+            <div class="flex justify-center bg-white/[0.02] border border-white/[0.08] rounded-full p-1.5 max-w-sm mx-auto mb-14 fade-in-up">
+                <button id="tab-btn-kerala" onclick="switchOfficeTab('kerala')" class="flex-1 text-xs uppercase tracking-[0.18em] py-3.5 rounded-full font-bold transition-all duration-500 bg-brand-gold text-brand-darkBg shadow-lg">
                     Kerala Branch
                 </button>
-                <button id="tab-btn-punjab" onclick="switchOfficeTab('punjab')" class="flex-1 text-xs uppercase tracking-wider py-3 rounded-full font-bold transition-all duration-300 text-gray-400 hover:text-white">
+                <button id="tab-btn-punjab" onclick="switchOfficeTab('punjab')" class="flex-1 text-xs uppercase tracking-[0.18em] py-3.5 rounded-full font-semibold transition-all duration-500 text-gray-400 hover:text-white">
                     Punjab Branch
                 </button>
             </div>
 
-            <div class="bg-black/30 border border-white/5 rounded-3xl p-6 md:p-8 shadow-2xl relative fade-in-up">
-
+            <div class="bg-[#0A0F18] border border-white/[0.05] rounded-none p-6 md:p-10 shadow-2xl relative fade-in-up">
                 <!-- Kerala Panel -->
-                <div id="panel-kerala" class="space-y-6 transition-all duration-300 block">
+                <div id="panel-kerala" class="space-y-8 transition-all duration-500 block">
                     <div class="flex flex-wrap items-start justify-between gap-4">
-                        <div class="flex items-start space-x-4">
-                            <span class="text-2xl bg-brand-gold/10 p-3 rounded-xl border border-brand-gold/20 text-brand-gold">📍</span>
+                        <div class="flex items-start space-x-5">
+                            <span class="text-xl bg-white/[0.03] p-3.5 border border-white/[0.08] text-brand-gold">📍</span>
                             <div>
-                                <h4 class="text-lg font-serif text-white mb-1">Mailing Address (Kerala Region)</h4>
-                                <p class="text-gray-400 font-light text-sm leading-relaxed tracking-wide" id="address-kerala">TC X/2373(2), Mannanthala P.O, Trivandrum, Kerala</p>
+                                <h4 class="text-xs tracking-widest uppercase text-brand-gold/80 mb-1.5 font-bold">Mailing Address (Kerala Region)</h4>
+                                <p class="text-gray-300 font-light text-base leading-relaxed tracking-wide" id="address-kerala">TC X/2373(2), Mannanthala P.O, Trivandrum, Kerala</p>
                             </div>
                         </div>
                     </div>
-                    <div class="rounded-2xl overflow-hidden border border-white/10 h-52">
-                        <iframe class="w-full h-full grayscale contrast-125 opacity-90" loading="lazy" referrerpolicy="no-referrer-when-downgrade"
+                    <div class="overflow-hidden border border-white/[0.08] h-60">
+                        <iframe class="w-full h-full grayscale opacity-80 contrast-125 invert-[0.9] hue-rotate-180" loading="lazy" referrerpolicy="no-referrer-when-downgrade"
                             src="https://www.google.com/maps?q=TC+X/2373(2)+Mannanthala+Trivandrum+Kerala&output=embed"></iframe>
                     </div>
-                    <div class="pt-2 flex flex-wrap gap-3">
-                        <a href="https://maps.google.com/?q=TC+X/2373(2)+Mannanthala+Trivandrum" target="_blank" class="text-xs uppercase tracking-widest font-bold text-brand-gold border border-brand-gold/30 px-5 py-3 rounded-full hover:bg-brand-gold hover:text-brand-darkBg transition-all">Navigate Route</a>
-                        <a href="tel:+916238305540" class="text-xs uppercase tracking-widest font-bold text-gray-400 border border-white/10 px-5 py-3 rounded-full hover:text-white hover:border-white transition-all">Call Agent</a>
-                        <button onclick="copyText('address-kerala', this)" class="copy-btn text-xs uppercase tracking-widest font-bold text-gray-400 border border-white/10 px-5 py-3 rounded-full hover:text-white hover:border-white transition-all">Copy Address</button>
+                    <div class="pt-2 flex flex-wrap gap-4">
+                        <a href="https://maps.google.com/?q=TC+X/2373(2)+Mannanthala+Trivandrum" target="_blank" class="text-[10px] uppercase tracking-[0.2em] font-bold text-brand-gold border border-brand-gold/40 px-6 py-3.5 hover:bg-brand-gold hover:text-brand-darkBg transition-all duration-500">Navigate Route</a>
+                        <a href="tel:+916238305540" class="text-[10px] uppercase tracking-[0.2em] font-bold text-gray-400 border border-white/[0.08] px-6 py-3.5 hover:text-white hover:border-white/30 transition-all duration-500">Call Agent</a>
                     </div>
                 </div>
 
                 <!-- Punjab Panel -->
-                <div id="panel-punjab" class="space-y-6 transition-all duration-300 hidden">
+                <div id="panel-punjab" class="space-y-8 transition-all duration-500 hidden">
                     <div class="flex flex-wrap items-start justify-between gap-4">
-                        <div class="flex items-start space-x-4">
-                            <span class="text-2xl bg-brand-gold/10 p-3 rounded-xl border border-brand-gold/20 text-brand-gold">📍</span>
+                        <div class="flex items-start space-x-5">
+                            <span class="text-xl bg-white/[0.03] p-3.5 border border-white/[0.08] text-brand-gold">📍</span>
                             <div>
-                                <h4 class="text-lg font-serif text-white mb-1">Mailing Address (Punjab Region)</h4>
-                                <p class="text-gray-400 font-light text-sm leading-relaxed tracking-wide" id="address-punjab">No-340, Satnampura, Phagwara, Kapurthala, Punjab</p>
+                                <h4 class="text-xs tracking-widest uppercase text-brand-gold/80 mb-1.5 font-bold">Mailing Address (Punjab Region)</h4>
+                                <p class="text-gray-300 font-light text-base leading-relaxed tracking-wide" id="address-punjab">No-340, Satnampura, Phagwara, Kapurthala, Punjab</p>
                             </div>
                         </div>
                     </div>
-                    <div class="rounded-2xl overflow-hidden border border-white/10 h-52">
-                        <iframe class="w-full h-full grayscale contrast-125 opacity-90" loading="lazy" referrerpolicy="no-referrer-when-downgrade"
+                    <div class="overflow-hidden border border-white/[0.08] h-60">
+                        <iframe class="w-full h-full grayscale opacity-80 contrast-125 invert-[0.9] hue-rotate-180" loading="lazy" referrerpolicy="no-referrer-when-downgrade"
                             src="https://www.google.com/maps?q=Satnampura+Phagwara+Kapurthala+Punjab&output=embed"></iframe>
                     </div>
-                    <div class="pt-2 flex flex-wrap gap-3">
-                        <a href="https://maps.google.com/?q=No-340+Satnampura+Phagwara+Kapurthala+Punjab" target="_blank" class="text-xs uppercase tracking-widest font-bold text-brand-gold border border-brand-gold/30 px-5 py-3 rounded-full hover:bg-brand-gold hover:text-brand-darkBg transition-all">Navigate Route</a>
-                        <a href="tel:+916238305540" class="text-xs uppercase tracking-widest font-bold text-gray-400 border border-white/10 px-5 py-3 rounded-full hover:text-white hover:border-white transition-all">Call Agent</a>
-                        <button onclick="copyText('address-punjab', this)" class="copy-btn text-xs uppercase tracking-widest font-bold text-gray-400 border border-white/10 px-5 py-3 rounded-full hover:text-white hover:border-white transition-all">Copy Address</button>
+                    <div class="pt-2 flex flex-wrap gap-4">
+                        <a href="https://maps.google.com/?q=No-340+Satnampura+Phagwara+Kapurthala+Punjab" target="_blank" class="text-[10px] uppercase tracking-[0.2em] font-bold text-brand-gold border border-brand-gold/40 px-6 py-3.5 hover:bg-brand-gold hover:text-brand-darkBg transition-all duration-500">Navigate Route</a>
+                        <a href="tel:+916238305540" class="text-[10px] uppercase tracking-[0.2em] font-bold text-gray-400 border border-white/[0.08] px-6 py-3.5 hover:text-white hover:border-white/30 transition-all duration-500">Call Agent</a>
                     </div>
-                </div>
-
-                <div class="mt-6 pt-6 border-t border-white/5 flex flex-wrap items-center justify-center gap-4 text-xs text-gray-400">
-                    <button onclick="copyText('email-text', this)" class="copy-btn inline-flex items-center gap-2 font-bold text-brand-gold hover:text-brand-goldSoft transition-colors">
-                        <span id="email-text">arappurayiltravelagency@gmail.com</span>
-                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg>
-                    </button>
                 </div>
             </div>
         </div>
     </section>
 
     <!-- Global Footer -->
-    <footer class="bg-brand-darkBg pt-14 pb-8 text-gray-500 font-light border-t border-white/5">
+    <footer class="bg-brand-darkBg pt-20 pb-10 text-gray-500 font-light border-t border-white/[0.03]">
         <div class="max-w-7xl mx-auto px-6">
-            <div class="flex flex-col items-center text-center space-y-5">
-                <div class="flex items-center justify-center space-x-2">
-                    <svg class="w-5 h-5 text-brand-gold" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <circle cx="12" cy="12" r="10" />
-                        <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" />
-                        <path d="M2 12h20" />
-                    </svg>
-                    <span class="font-serif text-sm tracking-[0.25em] font-bold text-brand-gold uppercase">Arappurayil</span>
-                </div>
-                <p class="text-gray-400 font-medium tracking-[0.1em] text-xs md:text-sm">arappurayiltravelagency@gmail.com &nbsp;|&nbsp; +91 62383 05540</p>
-                <p class="text-xs">&copy; 2026 Arappurayil Travel Agency (Arappurayil.in). All rights reserved.</p>
-
-                <div class="w-full max-w-xs h-px bg-white/10"></div>
-
-                <a href="https://quadmedia-tvm.vercel.app/" target="_blank" rel="noopener noreferrer" class="group inline-flex items-center gap-2 text-[11px] tracking-[0.15em] uppercase text-gray-500 hover:text-brand-gold transition-colors duration-300">
-                    <span>Designed &amp; Developed by</span>
-                    <span class="font-bold text-brand-gold/90 group-hover:text-brand-gold">QuadMedia.TVM</span>
-                    <svg class="w-3 h-3 opacity-60 group-hover:translate-x-0.5 group-hover:opacity-100 transition-all" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
-                </a>
+            <div class="flex flex-col items-center text-center space-y-6">
+                <p class="text-gray-400 font-medium tracking-[0.12em] text-xs md:text-sm">arappurayiltravelagency@gmail.com &nbsp;&middot;&nbsp; +91 62383 05540</p>
+                <p class="text-[11px] tracking-wide text-gray-600">&copy; 2026 Arappurayil Travel Agency (Arappurayil.in). All rights reserved.</p>
             </div>
         </div>
     </footer>
 
-    <!-- Floating WhatsApp Widget -->
-    <div class="fixed bottom-6 right-6 z-40 hidden sm:block">
-        <a href="https://wa.me/916238305540?text=I%20want%20to%20plan%20a%20trip" target="_blank" class="bg-[#25D366] text-white p-4 rounded-full shadow-2xl hover:scale-110 transition-transform duration-300 flex items-center space-x-2 group">
-            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-            <span class="max-w-0 overflow-hidden group-hover:max-w-xs transition-all duration-500 text-xs font-bold uppercase tracking-wider whitespace-nowrap">Plan My Journey</span>
-        </a>
-    </div>
-
     <!-- Interactive Scripts -->
     <script>
-        // 1. Mobile Menu Logic
+        // 1. Loading Screen Timeline Control (2 Seconds)
+        window.addEventListener('DOMContentLoaded', () => {
+            const bar = document.getElementById('loader-bar');
+            const preloader = document.getElementById('preloader');
+            
+            // Trigger fluid loading bar
+            setTimeout(() => {
+                bar.style.w = '0%';
+                bar.classList.remove('w-0');
+                bar.classList.add('w-full');
+            }, 50);
+
+            // Turn off loading panel after exactly 2 seconds
+            setTimeout(() => {
+                preloader.classList.add('opacity-0', 'pointer-events-none');
+                document.querySelectorAll('.fade-in-up').forEach(el => observer.observe(el));
+            }, 2000);
+        });
+
+        // 2. Mobile Menu Logic
         const menuBtn = document.getElementById('menu-btn');
         const mobileMenu = document.getElementById('mobile-menu');
         const mobileLinks = document.querySelectorAll('.mobile-link');
@@ -377,12 +332,6 @@
             mobileMenu.classList.toggle('hidden');
             mobileMenu.classList.toggle('flex');
             document.body.classList.toggle('overflow-hidden');
-            const spans = menuBtn.querySelectorAll('span');
-            spans[0].classList.toggle('rotate-45');
-            spans[0].classList.toggle('translate-x-1');
-            spans[1].classList.toggle('opacity-0');
-            spans[2].classList.toggle('-rotate-45');
-            spans[2].classList.toggle('translate-x-1');
         });
 
         mobileLinks.forEach(link => {
@@ -393,18 +342,17 @@
             });
         });
 
-        // 2. Header Scroll Transition Control
         window.addEventListener('scroll', () => {
             if (window.scrollY > 40) {
-                header.classList.remove('bg-brand-darkBg/60');
-                header.classList.add('bg-brand-darkBg/95', 'shadow-2xl', 'h-16');
+                header.classList.remove('bg-brand-darkBg/40');
+                header.classList.add('bg-[#05070B]/95', 'shadow-2xl', 'h-16');
             } else {
-                header.classList.remove('bg-brand-darkBg/95', 'shadow-2xl', 'h-16');
-                header.classList.add('bg-brand-darkBg/60');
+                header.classList.remove('bg-[#05070B]/95', 'shadow-2xl', 'h-16');
+                header.classList.add('bg-brand-darkBg/40');
             }
         });
 
-        // 3. Interactive Office Tab Engine
+        // 3. Office Directory Tab Switching Engine
         function switchOfficeTab(branch) {
             const btnKerala = document.getElementById('tab-btn-kerala');
             const btnPunjab = document.getElementById('tab-btn-punjab');
@@ -412,69 +360,47 @@
             const panelPunjab = document.getElementById('panel-punjab');
 
             if (branch === 'kerala') {
-                btnKerala.className = "flex-1 text-xs uppercase tracking-wider py-3 rounded-full font-bold transition-all duration-300 bg-brand-gold text-brand-darkBg";
-                btnPunjab.className = "flex-1 text-xs uppercase tracking-wider py-3 rounded-full font-bold transition-all duration-300 text-gray-400 hover:text-white";
+                btnKerala.className = "flex-1 text-xs uppercase tracking-[0.18em] py-3.5 rounded-full font-bold transition-all duration-500 bg-brand-gold text-brand-darkBg shadow-lg";
+                btnPunjab.className = "flex-1 text-xs uppercase tracking-[0.18em] py-3.5 rounded-full font-semibold transition-all duration-500 text-gray-400 hover:text-white";
                 panelKerala.classList.replace('hidden', 'block');
                 panelPunjab.classList.replace('block', 'hidden');
             } else {
-                btnPunjab.className = "flex-1 text-xs uppercase tracking-wider py-3 rounded-full font-bold transition-all duration-300 bg-brand-gold text-brand-darkBg";
-                btnKerala.className = "flex-1 text-xs uppercase tracking-wider py-3 rounded-full font-bold transition-all duration-300 text-gray-400 hover:text-white";
+                btnPunjab.className = "flex-1 text-xs uppercase tracking-[0.18em] py-3.5 rounded-full font-bold transition-all duration-500 bg-brand-gold text-brand-darkBg shadow-lg";
+                btnKerala.className = "flex-1 text-xs uppercase tracking-[0.18em] py-3.5 rounded-full font-semibold transition-all duration-500 text-gray-400 hover:text-white";
                 panelPunjab.classList.replace('hidden', 'block');
                 panelKerala.classList.replace('block', 'hidden');
             }
         }
 
-        // 4. Copy to clipboard
-        function copyText(sourceId, btn) {
-            const text = document.getElementById(sourceId).textContent.trim();
-            navigator.clipboard.writeText(text).then(() => {
-                if (btn.tagName === 'BUTTON' && !btn.querySelector('svg')) {
-                    const prevText = btn.textContent;
-                    btn.dataset.prev = btn.dataset.prev || prevText;
-                    btn.textContent = 'Copied!';
-                    setTimeout(() => { btn.textContent = btn.dataset.prev; }, 1800);
-                } else {
-                    const span = btn.querySelector('span');
-                    const original = span.textContent;
-                    span.textContent = 'Copied!';
-                    setTimeout(() => { span.textContent = original; }, 1800);
-                }
-            }).catch(() => {});
-        }
-
-        // 5. Gallery data (hover zoom only — no captions — click opens lightbox)
+        // 4. Dynamic Gallery Builder (With First Frame Vertical/Asymmetric Aspect Rule)
         const galleryImages = [
-            { local: 'assets/images/1.jpg', fallback: 'https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?auto=format&fit=crop&w=1400&q=80', alt: 'Arappurayil Luxury Journey Feature 1' },
-            { local: 'assets/images/2.jpg', fallback: 'https://images.unsplash.com/photo-1533105079780-92b9be482077?auto=format&fit=crop&w=1400&q=80', alt: 'Arappurayil Luxury Journey Feature 2' },
-            { local: 'assets/images/3.jpg', fallback: 'https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=1400&q=80', alt: 'Arappurayil Luxury Journey Feature 3' },
-            { local: 'assets/images/4.jpg', fallback: 'https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?auto=format&fit=crop&w=1400&q=80', alt: 'Arappurayil Luxury Journey Feature 4' },
-            { local: 'assets/images/5.jpg', fallback: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1400&q=80', alt: 'Arappurayil Luxury Journey Feature 5' },
-            { local: 'assets/images/6.jpg', fallback: 'https://images.unsplash.com/photo-1519681393784-d120267933ba?auto=format&fit=crop&w=1400&q=80', alt: 'Arappurayil Luxury Journey Feature 6' },
+            { local: 'assets/images/1.jpg', fallback: 'https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=800&q=80', alt: 'Feature 1 Vertical Aspect' },
+            { local: 'assets/images/2.jpg', fallback: 'https://images.unsplash.com/photo-1533105079780-92b9be482077?auto=format&fit=crop&w=800&q=80', alt: 'Feature 2' },
+            { local: 'assets/images/3.jpg', fallback: 'https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=800&q=80', alt: 'Feature 3' },
+            { local: 'assets/images/4.jpg', fallback: 'https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?auto=format&fit=crop&w=800&q=80', alt: 'Feature 4' },
+            { local: 'assets/images/5.jpg', fallback: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=800&q=80', alt: 'Feature 5' },
+            { local: 'assets/images/6.jpg', fallback: 'https://images.unsplash.com/photo-1519681393784-d120267933ba?auto=format&fit=crop&w=800&q=80', alt: 'Feature 6' },
         ];
 
         const galleryGrid = document.getElementById('gallery-grid');
         galleryImages.forEach((img, i) => {
+            // Check if it's the first element -> apply luxurious custom height span parameter
+            const layoutClass = i === 0 ? 'sm:row-span-2 aspect-[3/4] sm:aspect-auto' : 'aspect-[4/3]';
             const html = `
-                <div class="group relative overflow-hidden rounded-2xl aspect-[4/3] bg-brand-darkBg shadow-xl cursor-zoom-in" onclick="openLightbox(${i})">
-                    <img src="${img.local}" data-fallback="${img.fallback}" onerror="this.onerror=null;this.src=this.dataset.fallback;" alt="${img.alt}" loading="lazy" class="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110">
-                    <div class="absolute inset-0 bg-brand-darkBg/0 group-hover:bg-brand-darkBg/30 transition-colors duration-500"></div>
-                    <div class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-500">
-                        <span class="w-11 h-11 rounded-full bg-brand-darkBg/60 border border-brand-gold/50 flex items-center justify-center text-brand-gold backdrop-blur-sm">
-                            <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 8V4h4M4 4l5.5 5.5M16 4h4v4M20 4l-5.5 5.5M4 16v4h4M4 20l5.5-5.5M20 16v4h-4M20 20l-5.5-5.5"/></svg>
-                        </span>
-                    </div>
+                <div class="${layoutClass} group relative overflow-hidden rounded-none bg-brand-darkBg shadow-2xl cursor-zoom-in border border-white/[0.04]" onclick="openLightbox(${i})">
+                    <img src="${img.local}" data-fallback="${img.fallback}" onerror="this.onerror=null;this.src=this.dataset.fallback;" alt="${img.alt}" loading="lazy" class="w-full h-full object-cover transition-transform duration-[1.2s] ease-out group-hover:scale-103">
+                    <div class="absolute inset-0 bg-brand-darkBg/10 group-hover:bg-brand-darkBg/40 transition-colors duration-500"></div>
                 </div>`;
             galleryGrid.insertAdjacentHTML('beforeend', html);
         });
 
-        // 6. Lightbox engine
+        // 5. Lightbox Engine
         let lightboxIndex = 0;
         function openLightbox(index) {
             lightboxIndex = index;
             const gridImg = galleryGrid.children[index].querySelector('img');
             const lbImg = document.getElementById('lightbox-img');
             lbImg.src = gridImg.src;
-            lbImg.alt = gridImg.alt;
             const lb = document.getElementById('lightbox');
             lb.classList.remove('hidden');
             lb.classList.add('flex');
@@ -490,59 +416,38 @@
             lightboxIndex = (lightboxIndex + dir + galleryImages.length) % galleryImages.length;
             openLightbox(lightboxIndex);
         }
-        document.getElementById('lightbox').addEventListener('click', (e) => {
-            if (e.target.id === 'lightbox') closeLightbox();
-        });
-        document.addEventListener('keydown', (e) => {
-            if (document.getElementById('lightbox').classList.contains('hidden')) return;
-            if (e.key === 'Escape') closeLightbox();
-            if (e.key === 'ArrowLeft') navLightbox(-1);
-            if (e.key === 'ArrowRight') navLightbox(1);
-        });
 
-        // 7. Dynamic Destinations Grid Builder (kept intact — image + name + WhatsApp booking)
+        // 6. Compact Dynamic Destination Layout Grid Builder
         const destinations = [
-            { name: "Kashmir", img: "https://images.unsplash.com/photo-1595815771614-ade9d652a65d?auto=format&fit=crop&w=800&q=80" },
-            { name: "Kerala", img: "https://images.unsplash.com/photo-1602216056096-3b40cc0c9944?auto=format&fit=crop&w=800&q=80" },
-            { name: "Punjab", img: "https://images.unsplash.com/photo-1589136777351-fdc9c9cb166f?auto=format&fit=crop&w=800&q=80" },
-            { name: "Manali-Kasol", img: "https://images.unsplash.com/photo-1605649487212-4d4b29bb89cb?auto=format&fit=crop&w=800&q=80" },
-            { name: "Shimla", img: "https://images.unsplash.com/photo-1525256956276-80f089602e6c?auto=format&fit=crop&w=800&q=80" },
-            { name: "Delhi-Agra", img: "https://images.unsplash.com/photo-1564507592208-0272258b51ce?auto=format&fit=crop&w=800&q=80" },
-            { name: "Rajasthan", img: "https://images.unsplash.com/photo-1477587458883-47145ed94245?auto=format&fit=crop&w=800&q=80" },
-            { name: "Lakshadweep", img: "https://images.unsplash.com/photo-1510414842594-a61c69b5ae57?auto=format&fit=crop&w=800&q=80" },
-            { name: "Goa", img: "https://images.unsplash.com/photo-1512343879784-a960bf40e7f2?auto=format&fit=crop&w=800&q=80" },
-            { name: "Hyderabad", img: "https://images.unsplash.com/photo-1513346940221-6f673d962e97?auto=format&fit=crop&w=800&q=80" },
-            { name: "Ladakh", img: "https://images.unsplash.com/photo-1581793745862-99fde7fa73d2?auto=format&fit=crop&w=800&q=80" },
-            { name: "Meghalaya", img: "https://images.unsplash.com/photo-1571536802807-30451e3955d8?auto=format&fit=crop&w=800&q=80" },
-            { name: "Sikkim", img: "https://images.unsplash.com/photo-1626083073981-d104597b69c3?auto=format&fit=crop&w=800&q=80" }
+            { name: "Kashmir", img: "https://images.unsplash.com/photo-1595815771614-ade9d652a65d?auto=format&fit=crop&w=600&q=80" },
+            { name: "Kerala", img: "https://images.unsplash.com/photo-1602216056096-3b40cc0c9944?auto=format&fit=crop&w=600&q=80" },
+            { name: "Punjab", img: "https://images.unsplash.com/photo-1589136777351-fdc9c9cb166f?auto=format&fit=crop&w=600&q=80" },
+            { name: "Manali", img: "https://images.unsplash.com/photo-1605649487212-4d4b29bb89cb?auto=format&fit=crop&w=600&q=80" },
+            { name: "Shimla", img: "https://images.unsplash.com/photo-1525256956276-80f089602e6c?auto=format&fit=crop&w=600&q=80" },
+            { name: "Delhi", img: "https://images.unsplash.com/photo-1564507592208-0272258b51ce?auto=format&fit=crop&w=600&q=80" },
+            { name: "Rajasthan", img: "https://images.unsplash.com/photo-1477587458883-47145ed94245?auto=format&fit=crop&w=600&q=80" },
+            { name: "Lakshadweep", img: "https://images.unsplash.com/photo-1510414842594-a61c69b5ae57?auto=format&fit=crop&w=600&q=80" },
+            { name: "Goa", img: "https://images.unsplash.com/photo-1512343879784-a960bf40e7f2?auto=format&fit=crop&w=600&q=80" },
+            { name: "Sikkim", img: "https://images.unsplash.com/photo-1626083073981-d104597b69c3?auto=format&fit=crop&w=600&q=80" }
         ];
 
-        const gridContainer = document.getElementById('destination-grid');
-        const phone = "916238305540";
-
-        destinations.forEach((dest, index) => {
-            const message = encodeURIComponent(`Hello Arappurayil Travel Agency, I want to book a premium trip package to ${dest.name}. Please provide pricing options.`);
-            const delay = (index % 3) * 100;
-            const cardHTML = `
-                <div class="group relative overflow-hidden rounded-2xl aspect-[4/5] cursor-pointer shadow-xl fade-in-up" style="transition-delay: ${delay}ms;">
-                    <img src="${dest.img}" alt="${dest.name} Premium Packages Arappurayil.in" loading="lazy" class="absolute inset-0 w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110">
-                    <div class="absolute inset-0 bg-gradient-to-t from-[#070A0F] via-[#070A0F]/30 to-transparent opacity-85 transition-opacity duration-500"></div>
-                    <div class="absolute inset-0 p-6 flex flex-col justify-end">
-                        <h3 class="text-3xl font-serif text-white mb-2 translate-y-4 group-hover:-translate-y-2 transition-transform duration-500 ease-out">${dest.name}</h3>
-                        <div class="opacity-0 group-hover:opacity-100 transition-all duration-500 delay-100 transform translate-y-8 group-hover:-translate-y-2">
-                            <a href="https://wa.me/${phone}?text=${message}" target="_blank" rel="noopener noreferrer" class="inline-flex items-center space-x-2 bg-[#25D366] hover:bg-[#1ebe57] text-white text-[10px] sm:text-xs font-bold px-5 py-3 rounded-full uppercase tracking-widest transition-colors">
-                                <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-                                <span>Book Package</span>
-                            </a>
-                        </div>
+        const destGridContainer = document.getElementById('destination-grid');
+        destinations.forEach((dest) => {
+            const message = encodeURIComponent(`Hello Arappurayil Travel Agency, I want to book a trip to ${dest.name}.`);
+            const html = `
+                <a href="https://wa.me/916238305540?text=${message}" target="_blank" class="group relative block overflow-hidden aspect-[4/5] bg-[#05070B] border border-white/[0.04]">
+                    <img src="${dest.img}" alt="${dest.name}" loading="lazy" class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent"></div>
+                    <div class="absolute inset-0 p-4 flex flex-col justify-end">
+                        <h3 class="text-sm md:text-base font-serif tracking-wide text-white">${dest.name}</h3>
                     </div>
-                </div>
+                </a>
             `;
-            gridContainer.insertAdjacentHTML('beforeend', cardHTML);
+            destGridContainer.insertAdjacentHTML('beforeend', html);
         });
 
-        // 8. Scroll Animation Observer (fade-ins + route path draw)
-        const observerOptions = { root: null, rootMargin: '0px', threshold: 0.15 };
+        // 7. Scroll Animation Engine Setup
+        const observerOptions = { root: null, rootMargin: '0px', threshold: 0.05 };
         const observer = new IntersectionObserver((entries, obs) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
@@ -551,7 +456,6 @@
                 }
             });
         }, observerOptions);
-        document.querySelectorAll('.fade-in-up').forEach(el => observer.observe(el));
 
         const routeObserver = new IntersectionObserver((entries, obs) => {
             entries.forEach(entry => {
@@ -560,29 +464,8 @@
                     obs.unobserve(entry.target);
                 }
             });
-        }, { threshold: 0.4 });
+        }, { threshold: 0.2 });
         document.querySelectorAll('.route-observe').forEach(el => routeObserver.observe(el));
-
-        // 9. Count-up stats
-        const counters = document.querySelectorAll('.counter');
-        const counterObserver = new IntersectionObserver((entries, obs) => {
-            entries.forEach(entry => {
-                if (!entry.isIntersecting) return;
-                const el = entry.target;
-                const target = parseInt(el.dataset.target, 10);
-                const duration = 1400;
-                const start = performance.now();
-                function tick(now) {
-                    const progress = Math.min((now - start) / duration, 1);
-                    const eased = 1 - Math.pow(1 - progress, 3);
-                    el.textContent = Math.round(eased * target).toLocaleString();
-                    if (progress < 1) requestAnimationFrame(tick);
-                }
-                requestAnimationFrame(tick);
-                obs.unobserve(el);
-            });
-        }, { threshold: 0.6 });
-        counters.forEach(c => counterObserver.observe(c));
     </script>
 </body>
 </html>
