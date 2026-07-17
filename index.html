@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Arappurayil Travel Agency</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Playfair Display & Plus Jakarta Sans -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            gold: '#D4A34F',      /* Match the warm gold accents */
+                            goldDark: '#B88636',  /* Deep gold hover state */
+                            darkBg: '#090D14',    /* Deep rich dark blue-black background */
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+                        serif: ['"Playfair Display"', 'serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* Smooth backdrop-blur fallback and custom dark overlay gradient */
+        .hero-overlay {
+            background: linear-gradient(to bottom, rgba(9, 13, 20, 0.4) 0%, rgba(9, 13, 20, 0.7) 60%, rgba(9, 13, 20, 0.95) 100%);
+        }
+    </style>
+</head>
+<body class="bg-brand-darkBg text-white font-sans antialiased overflow-x-hidden min-h-screen">
+
+    <!-- Header / Navigation -->
+    <header class="fixed top-0 left-0 w-full z-50 bg-gradient-to-b from-brand-darkBg/90 to-transparent backdrop-blur-sm transition-all duration-300">
+        <div class="max-w-7xl mx-auto px-6 h-24 flex items-center justify-between">
+            
+            <!-- Brand Logo -->
+            <a href="#" class="flex items-center space-x-3 group">
+                <div class="flex flex-col text-left">
+                    <!-- Logo Icon + Main Text -->
+                    <div class="flex items-center space-x-2">
+                        <!-- Simulated SVG Globe Icon resembling the logo -->
+                        <svg class="w-8 h-8 text-white group-hover:text-brand-gold transition-colors duration-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                            <circle cx="12" cy="12" r="10" />
+                            <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" />
+                            <path d="M2 12h20" />
+                            <path d="M19.07 4.93L4.93 19.07" class="opacity-50" />
+                        </svg>
+                        <span class="font-serif text-xl tracking-[0.2em] font-semibold text-white uppercase">Arappurayil</span>
+                    </div>
+                    <span class="text-[9px] tracking-[0.35em] text-gray-400 uppercase font-light pl-10 -mt-1">Travel Agency</span>
+                </div>
+            </a>
+
+            <!-- Navigation Links -->
+            <nav class="hidden md:flex items-center space-x-10 text-xs tracking-[0.2em] font-medium uppercase text-gray-300">
+                <a href="#home" class="text-brand-gold relative after:absolute after:bottom-[-8px] after:left-0 after:w-full after:h-[2px] after:bg-brand-gold transition-colors">Home</a>
+                <a href="#gallery" class="hover:text-white transition-colors">Gallery</a>
+                <a href="#packages" class="hover:text-white transition-colors">Packages</a>
+                <a href="#contact" class="hover:text-white transition-colors">Contact</a>
+            </nav>
+
+            <!-- CTA Button -->
+            <div>
+                <a href="#contact" class="inline-flex items-center space-x-2 border border-brand-gold text-brand-gold hover:bg-brand-gold hover:text-brand-darkBg transition-all duration-300 px-6 py-3 rounded-full text-xs font-semibold tracking-[0.15em] uppercase">
+                    <span>Let's Travel</span>
+                    <svg class="w-3.5 h-3.5 transform rotate-45" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"></path>
+                    </svg>
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section id="home" class="relative min-h-screen w-full flex flex-col justify-between pt-32 pb-12 overflow-hidden">
+        
+        <!-- Background Loop Video -->
+        <div class="absolute inset-0 w-full h-full object-cover z-0">
+            <!-- Ensure muted, playsinline, and loop are active for auto-play on browsers -->
+            <video autoplay loop muted playsinline class="w-full h-full object-cover">
+                <source src="Herovideo.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+            <!-- Cinematic Dark Gradient Layer to preserve text legibility -->
+            <div class="absolute inset-0 hero-overlay"></div>
+        </div>
+
+        <!-- Hero Content Wrapper -->
+        <div class="relative z-10 max-w-7xl mx-auto px-6 w-full my-auto grid grid-cols-1 lg:grid-cols-12 gap-8 items-end">
+            
+            <!-- Left Headline Side -->
+            <div class="lg:col-span-7 flex flex-col items-start text-left">
+                
+                <!-- Tagline Badge with Location Indicator -->
+                <div class="flex items-center space-x-2 text-xs tracking-[0.2em] uppercase font-semibold text-brand-gold mb-6">
+                    <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd" />
+                    </svg>
+                    <span>Kashmir. Pure Magic.</span>
+                    <!-- Flight path stylized dashes -->
+                    <span class="text-gray-500 opacity-60">─ ─ ─ <span class="inline-block transform rotate-45">✈</span></span>
+                </div>
+
+                <!-- Hero Headline -->
+                <h1 class="font-serif text-5xl md:text-7xl leading-[1.1] tracking-wide text-white mb-6 border-l-4 border-brand-gold pl-6">
+                    Make your<br>
+                    <span class="text-brand-gold font-normal italic">Dream Trip</span><br>
+                    a Reality
+                </h1>
+
+                <!-- Subtitle Description -->
+                <p class="text-gray-300 max-w-md text-sm md:text-base leading-relaxed font-light mb-10 pl-7">
+                    From serene backwaters to misty mountains, we craft journeys that stay with you forever.
+                </p>
+
+                <!-- Call to Action Buttons -->
+                <div class="flex flex-wrap items-center gap-4 pl-7">
+                    <a href="#packages" class="bg-brand-gold hover:bg-brand-goldDark text-brand-darkBg font-bold text-xs uppercase tracking-wider px-8 py-4.5 rounded-full inline-flex items-center space-x-2.5 transition-all duration-300">
+                        <span>Explore Packages</span>
+                        <svg class="w-4 h-4 transform rotate-45" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"></path>
+                        </svg>
+                    </a>
+                    
+                    <button class="border border-white/20 hover:border-brand-gold hover:text-brand-gold text-white font-bold text-xs uppercase tracking-wider px-8 py-4.5 rounded-full inline-flex items-center space-x-2.5 transition-all duration-300 bg-black/30 backdrop-blur-sm">
+                        <!-- SVG Play Button -->
+                        <span class="w-5 h-5 rounded-full border border-current flex items-center justify-center">
+                            <svg class="w-2.5 h-2.5 fill-current ml-0.5" viewBox="0 0 24 24">
+                                <path d="M8 5v14l11-7z" />
+                            </svg>
+                        </span>
+                        <span>Watch Video</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Right Info/Features Card Block -->
+            <div class="lg:col-span-5 w-full">
+                <div class="bg-black/40 backdrop-blur-md border border-white/10 rounded-3xl p-6 md:p-8 grid grid-cols-2 md:grid-cols-4 lg:grid-cols-4 gap-4 text-center divide-x divide-white/10">
+                    
+                    <!-- Feature 1 -->
+                    <div class="flex flex-col items-center justify-center space-y-2 p-2">
+                        <div class="text-brand-gold">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z" />
+                            </svg>
+                        </div>
+                        <span class="text-[11px] font-semibold text-white leading-tight">Best Price<br><span class="text-[9px] font-normal text-gray-400">Guarantee</span></span>
+                    </div>
+
+                    <!-- Feature 2 -->
+                    <div class="flex flex-col items-center justify-center space-y-2 p-2">
+                        <div class="text-brand-gold">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M14.25 9.75v-4.5m0 4.5h4.5m-4.5 0l6-6M3 10.5h18M3 14.25h18M3 18h18" />
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M12 18.5a6.5 6.5 0 100-13 6.5 6.5 0 000 13z" />
+                            </svg>
+                        </div>
+                        <span class="text-[11px] font-semibold text-white leading-tight">24/7<br><span class="text-[9px] font-normal text-gray-400">Support</span></span>
+                    </div>
+
+                    <!-- Feature 3 -->
+                    <div class="flex flex-col items-center justify-center space-y-2 p-2">
+                        <div class="text-brand-gold">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z" />
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z" />
+                            </svg>
+                        </div>
+                        <span class="text-[11px] font-semibold text-white leading-tight">Handpicked<br><span class="text-[9px] font-normal text-gray-400">Destinations</span></span>
+                    </div>
+
+                    <!-- Feature 4 -->
+                    <div class="flex flex-col items-center justify-center space-y-2 p-2">
+                        <div class="text-brand-gold">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12c0 1.268-.63 2.39-1.593 3.068a3.745 3.745 0 01-1.043 3.296 3.745 3.745 0 01-3.296 1.043A3.745 3.745 0 0112 21c-1.268 0-2.39-.63-3.068-1.593a3.746 3.746 0 01-3.296-1.043 3.745 3.745 0 01-1.043-3.296A3.745 3.745 0 013 12c0-1.268.63-2.39 1.593-3.068a3.745 3.745 0 011.043-3.296 3.746 3.746 0 013.296-1.043A3.746 3.746 0 0112 3c1.268 0 2.39.63 3.068 1.593a3.746 3.746 0 013.296 1.043 3.746 3.746 0 011.043 3.296A3.745 3.745 0 0121 12z" />
+                            </svg>
+                        </div>
+                        <span class="text-[11px] font-semibold text-white leading-tight">Safe & Secure<br><span class="text-[9px] font-normal text-gray-400">Travel</span></span>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer Scroll-Down indicator -->
+        <div class="relative z-10 w-full flex flex-col items-center justify-center space-y-2 mt-8">
+            <span class="text-[10px] tracking-[0.3em] text-gray-400 uppercase font-light">Scroll down to explore</span>
+            <svg class="w-4 h-4 text-brand-gold animate-bounce" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+            </svg>
+        </div>
+
+    </section>
+
+</body>
+</html>
