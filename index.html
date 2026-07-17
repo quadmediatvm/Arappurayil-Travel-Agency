@@ -45,6 +45,21 @@
                     fontFamily: {
                         sans: ['"Plus Jakarta Sans"', 'sans-serif'],
                         serif: ['"Playfair Display"', 'serif'],
+                    },
+                    animation: {
+                        'marquee': 'marquee 25s linear infinite',
+                        'marquee-reverse': 'marquee-reverse 25s linear infinite',
+                        'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                    },
+                    keyframes: {
+                        marquee: {
+                            '0%': { transform: 'translateX(0%)' },
+                            '100%': { transform: 'translateX(-50%)' }
+                        },
+                        'marquee-reverse': {
+                            '0%': { transform: 'translateX(-50%)' },
+                            '100%': { transform: 'translateX(0%)' }
+                        }
                     }
                 }
             }
@@ -53,26 +68,23 @@
     <style>
         html { scrollbar-gutter: stable; }
         body { background-color: #070A0F; }
-        .hero-premium-overlay {
-            background: linear-gradient(to bottom, rgba(7,10,15,0.25) 0%, rgba(7,10,15,0.15) 30%, rgba(7,10,15,0.55) 70%, rgba(7,10,15,0.97) 96%, rgba(7,10,15,1) 100%);
-        }
-        .text-protection-shadow { text-shadow: 0 4px 24px rgba(7,10,15,0.7); }
         ::-webkit-scrollbar { width: 8px; }
         ::-webkit-scrollbar-track { background: #070A0F; }
         ::-webkit-scrollbar-thumb { background: #D4A34F; border-radius: 4px; }
-        .fade-in-up { opacity: 0; transform: translateY(28px); transition: opacity 0.8s ease-out, transform 0.8s ease-out; }
-        .fade-in-up.visible { opacity: 1; transform: translateY(0); }
-        .grain::before {
-            content: ""; position: absolute; inset: 0; pointer-events: none; opacity: 0.03; mix-blend-mode: overlay;
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-        }
-        .route-path { stroke-dasharray: 6 10; stroke-dashoffset: 1000; transition: stroke-dashoffset 2.2s ease-out; }
+        
+        /* Modern Scroll Animation States */
+        .reveal-element { opacity: 0; transform: translateY(30px); transition: opacity 0.8s cubic-bezier(0.215, 0.61, 0.355, 1), transform 0.8s cubic-bezier(0.215, 0.61, 0.355, 1); }
+        .reveal-element.visible { opacity: 1; transform: translateY(0); }
+        
+        .route-path { stroke-dasharray: 6 10; stroke-dashoffset: 1000; transition: stroke-dashoffset 2.5s ease-out; }
         .route-path.drawn { stroke-dashoffset: 0; }
-        @media (prefers-reduced-motion: reduce) {
-            .fade-in-up, .route-path { transition: none !important; opacity: 1 !important; transform: none !important; }
-        }
-        .lightbox-img { max-height: 82vh; }
-        #lightbox { backdrop-filter: blur(12px); }
+        
+        .lightbox-img { max-height: 85vh; max-width: 90vw; }
+        #lightbox { backdrop-filter: blur(16px); }
+        
+        /* Smooth scale layout for image grid */
+        .gallery-card img { transition: transform 0.7s cubic-bezier(0.25, 1, 0.5, 1); }
+        .gallery-card:hover img { transform: scale(1.04); }
     </style>
 </head>
 <body class="bg-brand-darkBg text-white font-sans antialiased overflow-x-hidden min-h-screen selection:bg-brand-gold selection:text-brand-darkBg">
@@ -80,279 +92,325 @@
     <!-- Cinematic Preloader -->
     <div id="preloader" class="fixed inset-0 bg-[#070A0F] z-[100] flex flex-col justify-center items-center pointer-events-auto transition-opacity duration-700 ease-out">
         <div class="max-w-md w-full px-8 text-center space-y-6">
-            <h2 class="font-serif text-2xl md:text-3xl tracking-[0.25em] font-bold text-brand-gold uppercase">Arappurayil</h2>
+            <h2 class="font-serif text-2xl md:text-3xl tracking-[0.25em] font-bold text-brand-gold uppercase animate-pulse-slow">Arappurayil</h2>
             <p class="text-[10px] tracking-[0.4em] text-white/60 uppercase font-semibold">Travel Agency</p>
             <div class="w-full bg-white/[0.05] h-[2px] mt-4 relative overflow-hidden">
-                <div id="loader-bar" class="absolute top-0 left-0 h-full w-0 bg-brand-gold transition-all duration-[2000ms] ease-out"></div>
+                <div id="loader-bar" class="absolute top-0 left-0 h-full w-0 bg-brand-gold transition-all duration-[1500ms] ease-out"></div>
             </div>
         </div>
     </div>
 
-    <!-- Header / Navigation -->
-    <header id="main-header" class="fixed top-0 left-0 w-full z-50 transition-all duration-500 bg-brand-darkBg/40 backdrop-blur-xl border-b border-white/[0.05]">
-        <div class="max-w-7xl mx-auto px-6 h-20 md:h-24 flex items-center justify-between">
-            <a href="#home" class="flex items-center space-x-3 group drop-shadow-[0_2px_8px_rgba(0,0,0,0.8)]">
-                <!-- Agency Custom Logo Incorporation -->
-                <div class="w-12 h-12 rounded-full overflow-hidden border border-brand-gold/40 flex-shrink-0 bg-[#0A0F18]">
-                    <img src="logo.jpg" alt="Arappurayil Travel Logo" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" onerror="this.style.display='none'">
+    <!-- Header / Navigation (Fully Solid Premium Color, Clean Alignment) -->
+    <header id="main-header" class="fixed top-0 left-0 w-full z-50 bg-[#070A0F] border-b border-white/[0.05] shadow-lg">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 h-20 md:h-24 flex items-center justify-between">
+            
+            <!-- Perfected Logo & Label Alignment Area -->
+            <a href="#home" class="flex items-center space-x-3.5 group">
+                <div class="w-11 h-11 md:w-13 md:h-13 rounded-full overflow-hidden border border-brand-gold/50 flex-shrink-0 bg-[#0A0F18] shadow-inner relative group-hover:border-brand-gold transition-colors duration-300">
+                    <!-- Standard Fallback Placeholder System inside Image Tag -->
+                    <img src="logo.jpg" alt="Arappurayil Travel Logo" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" onerror="this.src='https://images.unsplash.com/photo-1488646953014-85cb44e25828?auto=format&fit=crop&w=120&q=80'">
                 </div>
-                <div class="flex flex-col text-left">
-                    <span class="font-serif text-lg md:text-xl tracking-[0.22em] font-bold text-brand-gold uppercase transition-colors duration-300">Arappurayil</span>
-                    <span class="text-[9px] tracking-[0.32em] text-white uppercase font-bold opacity-90">Travel Agency · Est. Trivandrum</span>
+                <div class="flex flex-col justify-center">
+                    <span class="font-serif text-lg md:text-2xl tracking-[0.18em] font-bold text-brand-gold uppercase transition-colors duration-300 group-hover:text-brand-goldSoft">Arappurayil</span>
+                    <span class="text-[9px] md:text-[10px] tracking-[0.28em] text-white/70 uppercase font-medium">Travel Agency · Est. Trivandrum</span>
                 </div>
             </a>
 
-            <nav class="hidden md:flex items-center space-x-10 text-xs tracking-[0.22em] font-semibold uppercase text-white/90 drop-shadow-[0_2px_5px_rgba(0,0,0,0.9)]">
-                <a href="#home" class="text-brand-gold relative transition-colors duration-300">Home</a>
-                <a href="#gallery" class="hover:text-brand-gold transition-colors duration-300">Gallery</a>
-                <a href="#destinations" class="hover:text-brand-gold transition-colors duration-300">Destinations</a>
-                <a href="#contact" class="hover:text-brand-gold transition-colors duration-300">Contact</a>
+            <!-- Menu Navigation Links -->
+            <nav class="hidden md:flex items-center space-x-8 text-xs tracking-[0.2em] font-semibold uppercase text-white/80">
+                <a href="#home" class="hover:text-brand-gold transition-colors duration-300 relative py-1 after:absolute after:bottom-0 after:left-0 after:w-0 after:h-[1px] after:bg-brand-gold hover:after:w-full after:transition-all after:duration-300">Home</a>
+                <a href="#gallery" class="hover:text-brand-gold transition-colors duration-300 relative py-1 after:absolute after:bottom-0 after:left-0 after:w-0 after:h-[1px] after:bg-brand-gold hover:after:w-full after:transition-all after:duration-300">Gallery</a>
+                <a href="#destinations" class="hover:text-brand-gold transition-colors duration-300 relative py-1 after:absolute after:bottom-0 after:left-0 after:w-0 after:h-[1px] after:bg-brand-gold hover:after:w-full after:transition-all after:duration-300">Destinations</a>
+                <a href="#contact" class="hover:text-brand-gold transition-colors duration-300 relative py-1 after:absolute after:bottom-0 after:left-0 after:w-0 after:h-[1px] after:bg-brand-gold hover:after:w-full after:transition-all after:duration-300">Contact</a>
             </nav>
 
+            <!-- CTA Actions Grid -->
             <div class="flex items-center space-x-4">
-                <a href="https://wa.me/916238305540" target="_blank" class="hidden sm:inline-flex items-center space-x-2 bg-brand-gold text-brand-darkBg hover:bg-brand-goldDark transition-all duration-500 px-6 py-3 rounded-full text-xs font-bold tracking-[0.15em] uppercase shadow-[0_4px_20px_rgba(212,163,79,0.2)]">
+                <a href="https://wa.me/916238305540?text=Hello%20Arappurayil%20Travel,%20I%20would%20like%20to%20plan%20a%20premium%20journey." target="_blank" rel="noopener font-bold" class="hidden sm:inline-flex items-center space-x-2 bg-brand-gold text-brand-darkBg hover:bg-brand-goldDark transition-all duration-300 px-6 py-3 rounded-none text-xs font-bold tracking-[0.15em] uppercase shadow-[0_4px_15px_rgba(212,163,79,0.15)] hover:translate-y-[-1px]">
                     <span>Plan My Trip</span>
                 </a>
-                <button id="menu-btn" aria-label="Menu" class="md:hidden flex flex-col justify-between w-6 h-5 text-brand-gold focus:outline-none z-50 drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]">
-                    <span class="w-6 h-0.5 bg-brand-gold transition-transform duration-300 origin-top-left"></span>
-                    <span class="w-6 h-0.5 bg-brand-gold transition-opacity duration-300"></span>
-                    <span class="w-6 h-0.5 bg-brand-gold transition-transform duration-300 origin-bottom-left"></span>
+                <button id="menu-btn" aria-label="Toggle Mobile Menu" class="md:hidden flex flex-col justify-between w-6 h-4 text-brand-gold focus:outline-none z-50">
+                    <span id="line1" class="w-6 h-0.5 bg-brand-gold transition-transform duration-300 origin-top-left"></span>
+                    <span id="line2" class="w-6 h-0.5 bg-brand-gold transition-opacity duration-300"></span>
+                    <span id="line3" class="w-6 h-0.5 bg-brand-gold transition-transform duration-300 origin-bottom-left"></span>
                 </button>
             </div>
         </div>
     </header>
 
     <!-- Mobile Navigation Drawer -->
-    <div id="mobile-menu" class="fixed inset-0 bg-brand-darkBg/98 z-40 hidden flex-col justify-center items-center space-y-8 text-lg tracking-[0.25em] font-medium uppercase transition-all duration-300">
+    <div id="mobile-menu" class="fixed inset-0 bg-[#070A0F] z-40 hidden flex-col justify-center items-center space-y-8 text-base tracking-[0.25em] font-medium uppercase transition-all duration-300">
         <a href="#home" class="mobile-link text-brand-gold">Home</a>
         <a href="#gallery" class="mobile-link text-white hover:text-brand-gold">Gallery</a>
         <a href="#destinations" class="mobile-link text-white hover:text-brand-gold">Destinations</a>
         <a href="#contact" class="mobile-link text-white hover:text-brand-gold">Contact</a>
-        <a href="https://wa.me/916238305540" target="_blank" class="mobile-link inline-flex border border-brand-gold text-brand-gold px-6 py-3 rounded-full text-xs font-bold tracking-[0.15em]">WhatsApp Us</a>
+        <a href="https://wa.me/916238305540?text=Hello%20Arappurayil%20Travel,%20I%20would%20like%20to%20plan%20a%20premium%20journey." target="_blank" class="mobile-link inline-flex border border-brand-gold text-brand-gold px-6 py-3 text-xs font-bold tracking-[0.15em]">WhatsApp Us</a>
     </div>
 
-    <!-- Hero Section -->
-    <section id="home" class="relative h-[100svh] min-h-[560px] w-full overflow-hidden bg-brand-darkBg">
-        <video autoplay loop muted playsinline preload="auto" class="absolute inset-0 w-full h-full object-cover object-center">
-            <source src="Herovideo.mp4?v=2" type="video/mp4">
-        </video>
-        <div class="absolute inset-0 hero-premium-overlay"></div>
+    <!-- Hero Section (Clear Unobstructed Video Layout) -->
+    <section id="home" class="relative min-h-screen w-full flex flex-col justify-between bg-brand-darkBg pt-20 md:pt-24 lg:flex-row lg:items-stretch">
+        
+        <!-- Video Canvas Box Container (Clear view framing) -->
+        <div class="w-full h-[55svh] sm:h-[60svh] lg:h-auto lg:flex-1 relative overflow-hidden bg-black border-b lg:border-b-0 lg:border-r border-white/[0.05]">
+            <video autoplay loop muted playsinline preload="auto" class="absolute inset-0 w-full h-full object-cover object-center">
+                <source src="Herovideo.mp4?v=3" type="video/mp4">
+                <!-- Fallback background image frame if source breaks -->
+                <img src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1920&q=80" class="w-full h-full object-cover" alt="Backup Landscape Frame">
+            </video>
+            <!-- Completely transparent overlay to secure total video fidelity view profile -->
+            <div class="absolute inset-0 bg-black/5 pointer-events-none"></div>
+        </div>
 
-        <div class="relative z-10 h-full max-w-7xl mx-auto px-6 w-full flex flex-col justify-end pb-16 sm:pb-14 md:pb-20">
-            <div class="flex flex-col items-start text-left text-protection-shadow fade-in-up">
-                <div class="flex items-center space-x-2 text-[11px] md:text-xs tracking-[0.25em] uppercase font-bold text-brand-gold mb-4 md:mb-6">
-                    <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+        <!-- Adaptive Typography Frame Layout (Pushed Below Video viewport on Mobile) -->
+        <div class="w-full lg:w-[460px] xl:w-[540px] px-6 py-12 sm:py-16 lg:py-0 flex flex-col justify-center bg-[#070A0F] shrink-0 z-10">
+            <div class="flex flex-col items-start text-left max-w-xl mx-auto lg:max-w-none">
+                <div class="flex items-center space-x-2 text-[11px] tracking-[0.25em] uppercase font-bold text-brand-gold mb-4 animate-pulse">
+                    <svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 20 20">
                         <path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd" />
                     </svg>
                     <span>Premium Travel across India</span>
                 </div>
-                <h1 class="font-serif text-4xl sm:text-5xl md:text-7xl leading-[1.1] tracking-wide text-white mb-5 md:mb-6 border-l-[3px] md:border-l-4 border-brand-gold pl-4 md:pl-6">
+                <h1 class="font-serif text-3xl sm:text-5xl lg:text-5xl xl:text-6xl leading-[1.15] tracking-wide text-white mb-5 border-l-2 border-brand-gold pl-4">
                     Make your<br>
                     <span class="text-brand-gold font-normal italic font-serif">Dream Trip</span><br>
                     a Reality
                 </h1>
-                <p class="text-gray-300 max-w-md text-xs md:text-sm leading-relaxed font-light mb-6 md:mb-8 pl-4 md:pl-7">
+                <p class="text-gray-400 text-xs sm:text-sm leading-relaxed font-light mb-8 max-w-md">
                     From the serene backwaters of Kerala to the misty peaks of Kashmir — every journey is handcrafted, every detail personally arranged.
                 </p>
-                <div class="flex flex-row flex-wrap items-center gap-3 sm:gap-4 pl-4 md:pl-7 mb-8 md:mb-10">
-                    <a href="#destinations" class="bg-brand-gold hover:bg-brand-goldDark text-brand-darkBg font-bold text-xs uppercase tracking-wider px-6 md:px-8 py-3.5 md:py-4 rounded-full inline-flex items-center justify-center space-x-2.5 transition-all duration-300 shadow-[0_6px_20px_rgba(212,163,79,0.3)]">
-                        <span>Top Destinations</span>
+                <div class="flex flex-wrap items-center gap-4 w-full sm:w-auto">
+                    <a href="#destinations" class="flex-1 sm:flex-initial text-center bg-brand-gold hover:bg-brand-goldDark text-brand-darkBg font-bold text-xs uppercase tracking-wider px-8 py-4 transition-all duration-300 shadow-md">
+                        Top Destinations
                     </a>
-                    <a href="https://wa.me/916238305540?text=I%20want%20to%20plan%20a%20trip" target="_blank" class="border border-white/30 hover:border-brand-gold hover:text-brand-gold text-white font-bold text-xs uppercase tracking-wider px-6 md:px-8 py-3.5 md:py-4 rounded-full inline-flex items-center justify-center space-x-2.5 transition-all duration-300">
-                        <span>Talk to a Planner</span>
+                    <a href="https://wa.me/916238305540?text=Hello%20Arappurayil%20Travel,%20I%20want%20to%20plan%20a%20trip." target="_blank" rel="noopener" class="flex-1 sm:flex-initial text-center border border-white/20 hover:border-brand-gold hover:text-brand-gold text-white font-bold text-xs uppercase tracking-wider px-8 py-4 transition-all duration-300">
+                        Talk to a Planner
                     </a>
-                </div>
-                <div class="flex items-center gap-4 sm:gap-6 pl-4 md:pl-7 text-[10px] md:text-xs uppercase tracking-[0.15em] text-gray-300 font-semibold">
-                    <span><span class="text-brand-gold font-serif text-base md:text-lg not-italic font-bold mr-1">5000+</span>Travelers</span>
-                    <span class="w-1 h-1 rounded-full bg-brand-gold/60"></span>
-                    <span><span class="text-brand-gold font-serif text-base md:text-lg not-italic font-bold mr-1">13+</span>Destinations</span>
-                    <span class="w-1 h-1 rounded-full bg-brand-gold/60"></span>
-                    <span><span class="text-brand-gold font-serif text-base md:text-lg not-italic font-bold mr-1">24/7</span>Concierge</span>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Route Divider 1 -->
-    <div class="relative bg-[#0A0F18] py-10 border-b border-white/[0.03] overflow-hidden">
-        <div class="max-w-5xl mx-auto px-6 flex items-center gap-4 md:gap-8">
-            <span class="text-[10px] md:text-xs uppercase tracking-[0.25em] text-brand-gold/80 font-semibold whitespace-nowrap">Kerala Backwaters</span>
-            <svg class="flex-1 h-6 opacity-40" viewBox="0 0 600 24" preserveAspectRatio="none" fill="none">
-                <path class="route-path route-observe" d="M0 12 L600 12" stroke="#D4A34F" stroke-width="1" stroke-linecap="round"/>
-            </svg>
-            <svg class="w-4 h-4 text-brand-gold/60 shrink-0" viewBox="0 0 24 24" fill="currentColor"><path d="M21 16v-2l-8-5V3.5a1.5 1.5 0 0 0-3 0V9l-8 5v2l8-2.5V19l-2.5 1.5V22l4-1 4 1v-1.5L13 19v-5.5l8 2.5z"/></svg>
-            <span class="text-[10px] md:text-xs uppercase tracking-[0.25em] text-brand-gold/80 font-semibold whitespace-nowrap">Kashmir Valleys</span>
+    <!-- Animated Infinite Marquee Banner Component -->
+    <div class="relative w-full overflow-hidden bg-[#0B0F17] py-4 border-y border-white/[0.05]">
+        <div class="flex w-[200%] animate-marquee whitespace-nowrap">
+            <div class="flex justify-around w-1/2 text-[10px] sm:text-xs tracking-[0.3em] uppercase font-bold text-brand-gold/60">
+                <span>✦ Handcrafted Itineraries</span>
+                <span>✦ Luxury Stays</span>
+                <span>✦ 24/7 Premium Concierge</span>
+                <span>✦ Exotic Getaways</span>
+            </div>
+            <div class="flex justify-around w-1/2 text-[10px] sm:text-xs tracking-[0.3em] uppercase font-bold text-brand-gold/60">
+                <span>✦ Handcrafted Itineraries</span>
+                <span>✦ Luxury Stays</span>
+                <span>✦ 24/7 Premium Concierge</span>
+                <span>✦ Exotic Getaways</span>
+            </div>
         </div>
     </div>
 
-    <!-- Gallery Section -->
+    <!-- Route Path Vector Alignment Divider Section -->
+    <div class="relative bg-[#070A0F] py-10 border-b border-white/[0.02] overflow-hidden">
+        <div class="max-w-5xl mx-auto px-6 flex items-center gap-4 md:gap-8">
+            <span class="text-[10px] uppercase tracking-[0.25em] text-brand-gold/70 font-semibold whitespace-nowrap">Kerala Backwaters</span>
+            <svg class="flex-1 h-6 opacity-30" viewBox="0 0 600 24" preserveAspectRatio="none" fill="none">
+                <path class="route-path route-observe" d="M0 12 L600 12" stroke="#D4A34F" stroke-width="1.2" stroke-linecap="round"/>
+            </svg>
+            <svg class="w-4 h-4 text-brand-gold/50 shrink-0 transform rotate-45" viewBox="0 0 24 24" fill="currentColor"><path d="M21 16v-2l-8-5V3.5a1.5 1.5 0 0 0-3 0V9l-8 5v2l8-2.5V19l-2.5 1.5V22l4-1 4 1v-1.5L13 19v-5.5l8 2.5z"/></svg>
+            <span class="text-[10px] uppercase tracking-[0.25em] text-brand-gold/70 font-semibold whitespace-nowrap">Kashmir Valleys</span>
+        </div>
+    </div>
+
+    <!-- Gallery Grid Infrastructure Section -->
     <section id="gallery" class="py-24 md:py-32 bg-[#05070B] border-b border-white/[0.03]">
         <div class="max-w-7xl mx-auto px-6">
-            <div class="text-center mb-16 md:mb-20 fade-in-up">
+            <div class="text-center mb-16 md:mb-20 reveal-element">
                 <span class="text-brand-gold text-xs font-bold tracking-[0.35em] uppercase mb-4 block">Visual Experience</span>
                 <h2 class="font-serif text-3xl sm:text-4xl md:text-5xl tracking-wide text-white">Our Journey Gallery</h2>
                 <div class="w-12 h-[2px] bg-brand-gold/60 mx-auto mt-6"></div>
-                <p class="text-gray-400 text-xs tracking-widest uppercase mt-4 opacity-75">Tap any frame to expand view</p>
+                <p class="text-gray-400 text-[10px] sm:text-xs tracking-widest uppercase mt-4 opacity-70">Click any imagery canvas to expand full screen</p>
             </div>
 
-            <!-- Enhanced Masonry / Asymmetric Grid Handling Vertical First Aspect Item -->
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 auto-rows-fr fade-in-up" id="gallery-grid"></div>
+            <!-- Asymmetric Responsive Media Grid Layout Architecture -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 auto-rows-fr reveal-element" id="gallery-grid"></div>
         </div>
     </section>
 
-    <!-- Lightbox Modal -->
-    <div id="lightbox" class="fixed inset-0 z-[60] hidden items-center justify-center bg-brand-darkBg/95 p-4 md:p-10">
-        <button onclick="closeLightbox()" aria-label="Close" class="absolute top-5 right-5 md:top-8 md:right-8 text-white/60 hover:text-brand-gold transition-colors">
-            <svg class="w-8 h-8" fill="none" stroke="currentColor" stroke-width="1" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
+    <!-- Immersive Lightbox Modal Interface -->
+    <div id="lightbox" class="fixed inset-0 z-[60] hidden items-center justify-center bg-brand-darkBg/97 p-4 md:p-10 transition-all duration-300">
+        <button onclick="closeLightbox()" aria-label="Close Lightbox" class="absolute top-5 right-5 md:top-8 md:right-8 text-white/60 hover:text-brand-gold transition-colors z-50 p-2">
+            <svg class="w-8 h-8" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
         </button>
-        <button onclick="navLightbox(-1)" aria-label="Previous" class="absolute left-2 md:left-8 top-1/2 -translate-y-1/2 text-white/40 hover:text-brand-gold transition-colors">
-            <svg class="w-10 h-10" fill="none" stroke="currentColor" stroke-width="1" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"/></svg>
+        <button onclick="navLightbox(-1)" aria-label="Previous Image" class="absolute left-2 md:left-8 top-1/2 -translate-y-1/2 text-white/40 hover:text-brand-gold transition-colors z-50 p-2 bg-black/20 rounded-full">
+            <svg class="w-8 h-8 md:w-10 md:h-10" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"/></svg>
         </button>
-        <button onclick="navLightbox(1)" aria-label="Next" class="absolute right-2 md:right-8 top-1/2 -translate-y-1/2 text-white/40 hover:text-brand-gold transition-colors">
-            <svg class="w-10 h-10" fill="none" stroke="currentColor" stroke-width="1" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
+        <button onclick="navLightbox(1)" aria-label="Next Image" class="absolute right-2 md:right-8 top-1/2 -translate-y-1/2 text-white/40 hover:text-brand-gold transition-colors z-50 p-2 bg-black/20 rounded-full">
+            <svg class="w-8 h-8 md:w-10 md:h-10" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
         </button>
-        <img id="lightbox-img" src="" alt="" class="lightbox-img max-w-full rounded-none border border-white/10 shadow-2xl">
+        <div class="relative flex items-center justify-center max-w-full max-h-full">
+            <img id="lightbox-img" src="" alt="Enlarged Visual Frame" class="lightbox-img object-contain border border-white/10 shadow-2xl transition-transform duration-300">
+        </div>
     </div>
 
-    <!-- Compact Optimized Top Destinations Section -->
+    <!-- Reverse Animated Banner Marquee Asset Line -->
+    <div class="relative w-full overflow-hidden bg-[#070A0F] py-3.5 border-b border-white/[0.04]">
+        <div class="flex w-[200%] animate-marquee-reverse whitespace-nowrap">
+            <div class="flex justify-around w-1/2 text-[9px] tracking-[0.35em] uppercase font-semibold text-gray-500">
+                <span>• Premium Kerala Escapes</span>
+                <span>• Royal Rajasthan Tours</span>
+                <span>• Himachal Adventure Safaris</span>
+                <span>• Mystic Kashmir Holidays</span>
+            </div>
+            <div class="flex justify-around w-1/2 text-[9px] tracking-[0.35em] uppercase font-semibold text-gray-500">
+                <span>• Premium Kerala Escapes</span>
+                <span>• Royal Rajasthan Tours</span>
+                <span>• Himachal Adventure Safaris</span>
+                <span>• Mystic Kashmir Holidays</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Top Destinations Showcase Grid Matrix -->
     <section id="destinations" class="py-24 md:py-32 bg-[#0A0F18] border-b border-white/[0.02]">
         <div class="max-w-7xl mx-auto px-6">
-            <div class="text-center mb-16 md:mb-20 fade-in-up">
+            <div class="text-center mb-16 md:mb-20 reveal-element">
                 <span class="text-brand-gold text-xs font-bold tracking-[0.35em] uppercase mb-4 block">Curated Escapes</span>
                 <h2 class="font-serif text-3xl sm:text-4xl md:text-5xl tracking-wide text-white">Top Destinations</h2>
                 <div class="w-12 h-[2px] bg-brand-gold/60 mx-auto mt-6"></div>
             </div>
             
-            <!-- Highly Compact Grid Layout Structure -->
-            <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4" id="destination-grid"></div>
+            <!-- Grid Hub containing direct linked assets -->
+            <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 reveal-element" id="destination-grid"></div>
         </div>
     </section>
 
-    <!-- Contact Directory -->
+    <!-- Corporate HQ Contact & Map Switching Sub-System -->
     <section id="contact" class="py-24 md:py-32 bg-[#05070B] border-b border-white/[0.03]">
         <div class="max-w-4xl mx-auto px-6">
-            <div class="text-center mb-14 fade-in-up">
+            <div class="text-center mb-14 reveal-element">
                 <span class="text-brand-gold text-xs font-bold tracking-[0.35em] uppercase mb-4 block">Get In Touch</span>
                 <h2 class="font-serif text-3xl sm:text-4xl text-white tracking-wide">Interactive HQ Directory</h2>
             </div>
 
-            <div class="flex justify-center bg-white/[0.02] border border-white/[0.08] rounded-full p-1.5 max-w-sm mx-auto mb-14 fade-in-up">
-                <button id="tab-btn-kerala" onclick="switchOfficeTab('kerala')" class="flex-1 text-xs uppercase tracking-[0.18em] py-3.5 rounded-full font-bold transition-all duration-500 bg-brand-gold text-brand-darkBg shadow-lg">
+            <!-- Tab Switching Toggle Controls -->
+            <div class="flex justify-center bg-white/[0.02] border border-white/[0.08] p-1.5 max-w-sm mx-auto mb-14 reveal-element">
+                <button id="tab-btn-kerala" onclick="switchOfficeTab('kerala')" class="flex-1 text-xs uppercase tracking-[0.18em] py-3.5 font-bold transition-all duration-300 bg-brand-gold text-brand-darkBg shadow-lg">
                     Kerala Branch
                 </button>
-                <button id="tab-btn-punjab" onclick="switchOfficeTab('punjab')" class="flex-1 text-xs uppercase tracking-[0.18em] py-3.5 rounded-full font-semibold transition-all duration-500 text-gray-400 hover:text-white">
+                <button id="tab-btn-punjab" onclick="switchOfficeTab('punjab')" class="flex-1 text-xs uppercase tracking-[0.18em] py-3.5 font-semibold transition-all duration-300 text-gray-400 hover:text-white">
                     Punjab Branch
                 </button>
             </div>
 
-            <div class="bg-[#0A0F18] border border-white/[0.05] rounded-none p-6 md:p-10 shadow-2xl relative fade-in-up">
-                <!-- Kerala Panel -->
+            <!-- Tab Context Data Boxes -->
+            <div class="bg-[#0A0F18] border border-white/[0.05] p-6 md:p-10 shadow-2xl relative reveal-element">
+                
+                <!-- Kerala Branch Data Grid Block -->
                 <div id="panel-kerala" class="space-y-8 transition-all duration-500 block">
-                    <div class="flex flex-wrap items-start justify-between gap-4">
-                        <div class="flex items-start space-x-5">
-                            <span class="text-xl bg-white/[0.03] p-3.5 border border-white/[0.08] text-brand-gold">📍</span>
-                            <div>
-                                <h4 class="text-xs tracking-widest uppercase text-brand-gold/80 mb-1.5 font-bold">Mailing Address (Kerala Region)</h4>
-                                <p class="text-gray-300 font-light text-base leading-relaxed tracking-wide" id="address-kerala">TC X/2373(2), Mannanthala P.O, Trivandrum, Kerala</p>
-                            </div>
+                    <div class="flex items-start space-x-5">
+                        <span class="text-xl bg-white/[0.03] p-3 border border-white/[0.08] text-brand-gold">📍</span>
+                        <div>
+                            <h4 class="text-xs tracking-widest uppercase text-brand-gold/80 mb-1.5 font-bold">Mailing Address (Kerala Region)</h4>
+                            <p class="text-gray-300 font-light text-sm sm:text-base leading-relaxed tracking-wide">TC X/2373(2), Mannanthala P.O, Trivandrum, Kerala</p>
                         </div>
                     </div>
-                    <div class="overflow-hidden border border-white/[0.08] h-60">
+                    <div class="overflow-hidden border border-white/[0.08] h-60 w-full">
                         <iframe class="w-full h-full grayscale opacity-80 contrast-125 invert-[0.9] hue-rotate-180" loading="lazy" referrerpolicy="no-referrer-when-downgrade"
                             src="https://www.google.com/maps?q=TC+X/2373(2)+Mannanthala+Trivandrum+Kerala&output=embed"></iframe>
                     </div>
                     <div class="pt-2 flex flex-wrap gap-4">
-                        <a href="https://maps.google.com/?q=TC+X/2373(2)+Mannanthala+Trivandrum" target="_blank" class="text-[10px] uppercase tracking-[0.2em] font-bold text-brand-gold border border-brand-gold/40 px-6 py-3.5 hover:bg-brand-gold hover:text-brand-darkBg transition-all duration-500">Navigate Route</a>
-                        <a href="tel:+916238305540" class="text-[10px] uppercase tracking-[0.2em] font-bold text-gray-400 border border-white/[0.08] px-6 py-3.5 hover:text-white hover:border-white/30 transition-all duration-500">Call Agent</a>
+                        <a href="https://maps.google.com/?q=TC+X/2373(2)+Mannanthala+Trivandrum" target="_blank" rel="noopener" class="text-[10px] uppercase tracking-[0.2em] font-bold text-brand-gold border border-brand-gold/40 px-6 py-3.5 hover:bg-brand-gold hover:text-brand-darkBg transition-all duration-300">Open in Maps</a>
+                        <a href="tel:+916238305540" class="text-[10px] uppercase tracking-[0.2em] font-bold text-gray-400 border border-white/[0.08] px-6 py-3.5 hover:text-white hover:border-white/30 transition-all duration-300">Call Regional Agent</a>
                     </div>
                 </div>
 
-                <!-- Punjab Panel -->
+                <!-- Punjab Branch Data Grid Block -->
                 <div id="panel-punjab" class="space-y-8 transition-all duration-500 hidden">
-                    <div class="flex flex-wrap items-start justify-between gap-4">
-                        <div class="flex items-start space-x-5">
-                            <span class="text-xl bg-white/[0.03] p-3.5 border border-white/[0.08] text-brand-gold">📍</span>
-                            <div>
-                                <h4 class="text-xs tracking-widest uppercase text-brand-gold/80 mb-1.5 font-bold">Mailing Address (Punjab Region)</h4>
-                                <p class="text-gray-300 font-light text-base leading-relaxed tracking-wide" id="address-punjab">No-340, Satnampura, Phagwara, Kapurthala, Punjab</p>
-                            </div>
+                    <div class="flex items-start space-x-5">
+                        <span class="text-xl bg-white/[0.03] p-3 border border-white/[0.08] text-brand-gold">📍</span>
+                        <div>
+                            <h4 class="text-xs tracking-widest uppercase text-brand-gold/80 mb-1.5 font-bold">Mailing Address (Punjab Region)</h4>
+                            <p class="text-gray-300 font-light text-sm sm:text-base leading-relaxed tracking-wide">No-340, Satnampura, Phagwara, Kapurthala, Punjab</p>
                         </div>
                     </div>
-                    <div class="overflow-hidden border border-white/[0.08] h-60">
+                    <div class="overflow-hidden border border-white/[0.08] h-60 w-full">
                         <iframe class="w-full h-full grayscale opacity-80 contrast-125 invert-[0.9] hue-rotate-180" loading="lazy" referrerpolicy="no-referrer-when-downgrade"
                             src="https://www.google.com/maps?q=Satnampura+Phagwara+Kapurthala+Punjab&output=embed"></iframe>
                     </div>
                     <div class="pt-2 flex flex-wrap gap-4">
-                        <a href="https://maps.google.com/?q=No-340+Satnampura+Phagwara+Kapurthala+Punjab" target="_blank" class="text-[10px] uppercase tracking-[0.2em] font-bold text-brand-gold border border-brand-gold/40 px-6 py-3.5 hover:bg-brand-gold hover:text-brand-darkBg transition-all duration-500">Navigate Route</a>
-                        <a href="tel:+916238305540" class="text-[10px] uppercase tracking-[0.2em] font-bold text-gray-400 border border-white/[0.08] px-6 py-3.5 hover:text-white hover:border-white/30 transition-all duration-500">Call Agent</a>
+                        <a href="https://maps.google.com/?q=No-340+Satnampura+Phagwara+Kapurthala+Punjab" target="_blank" rel="noopener" class="text-[10px] uppercase tracking-[0.2em] font-bold text-brand-gold border border-brand-gold/40 px-6 py-3.5 hover:bg-brand-gold hover:text-brand-darkBg transition-all duration-300">Open in Maps</a>
+                        <a href="tel:+916238305540" class="text-[10px] uppercase tracking-[0.2em] font-bold text-gray-400 border border-white/[0.08] px-6 py-3.5 hover:text-white hover:border-white/30 transition-all duration-300">Call Regional Agent</a>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Global Footer -->
-    <footer class="bg-brand-darkBg pt-20 pb-10 text-gray-500 font-light border-t border-white/[0.03]">
-        <div class="max-w-7xl mx-auto px-6">
-            <div class="flex flex-col items-center text-center space-y-6">
-                <p class="text-gray-400 font-medium tracking-[0.12em] text-xs md:text-sm">arappurayiltravelagency@gmail.com &nbsp;&middot;&nbsp; +91 62383 05540</p>
-                <p class="text-[11px] tracking-wide text-gray-600">&copy; 2026 Arappurayil Travel Agency (Arappurayil.in). All rights reserved.</p>
+    <!-- Global Linked Interactive Footer Section -->
+    <footer class="bg-brand-darkBg pt-16 pb-10 text-gray-500 font-light border-t border-white/[0.03]">
+        <div class="max-w-7xl mx-auto px-6 flex flex-col items-center text-center space-y-6">
+            <div class="flex flex-wrap justify-center gap-6 text-xs uppercase tracking-[0.15em] font-semibold text-gray-400 mb-2">
+                <a href="#home" class="hover:text-brand-gold transition-colors">Home</a>
+                <a href="#gallery" class="hover:text-brand-gold transition-colors">Gallery</a>
+                <a href="#destinations" class="hover:text-brand-gold transition-colors">Destinations</a>
+                <a href="#contact" class="hover:text-brand-gold transition-colors">Contact</a>
             </div>
+            <p class="text-gray-400 font-medium tracking-[0.12em] text-xs md:text-sm">
+                <a href="mailto:arappurayiltravelagency@gmail.com" class="hover:underline">arappurayiltravelagency@gmail.com</a> 
+                &nbsp;&middot;&nbsp; 
+                <a href="tel:+916238305540" class="hover:underline">+91 62383 05540</a>
+            </p>
+            <p class="text-[10px] tracking-wide text-gray-600">&copy; 2026 Arappurayil Travel Agency (Arappurayil.in). All rights reserved.</p>
         </div>
     </footer>
 
-    <!-- Interactive Scripts -->
+    <!-- Core Runtime Systems Script Engine -->
     <script>
-        // 1. Loading Screen Timeline Control (2 Seconds)
+        // 1. Preloader Screen Control Manager
         window.addEventListener('DOMContentLoaded', () => {
             const bar = document.getElementById('loader-bar');
             const preloader = document.getElementById('preloader');
+            if(bar) bar.style.width = '100%';
             
-            // Trigger fluid loading bar
             setTimeout(() => {
-                bar.style.w = '0%';
-                bar.classList.remove('w-0');
-                bar.classList.add('w-full');
-            }, 50);
-
-            // Turn off loading panel after exactly 2 seconds
-            setTimeout(() => {
-                preloader.classList.add('opacity-0', 'pointer-events-none');
-                document.querySelectorAll('.fade-in-up').forEach(el => observer.observe(el));
-            }, 2000);
+                if(preloader) {
+                    preloader.classList.add('opacity-0', 'pointer-events-none');
+                }
+                document.querySelectorAll('.reveal-element').forEach(el => observer.observe(el));
+            }, 1600);
         });
 
-        // 2. Mobile Menu Logic
+        // 2. Mobile Responsive Nav Draw Engine
         const menuBtn = document.getElementById('menu-btn');
         const mobileMenu = document.getElementById('mobile-menu');
-        const mobileLinks = document.querySelectorAll('.mobile-link');
-        const header = document.getElementById('main-header');
+        const l1 = document.getElementById('line1');
+        const l2 = document.getElementById('line2');
+        const l3 = document.getElementById('line3');
 
-        menuBtn.addEventListener('click', () => {
-            mobileMenu.classList.toggle('hidden');
-            mobileMenu.classList.toggle('flex');
-            document.body.classList.toggle('overflow-hidden');
-        });
-
-        mobileLinks.forEach(link => {
-            link.addEventListener('click', () => {
+        function toggleMenu() {
+            const isHidden = mobileMenu.classList.contains('hidden');
+            if(isHidden) {
+                mobileMenu.classList.remove('hidden');
+                mobileMenu.classList.add('flex');
+                document.body.classList.add('overflow-hidden');
+                l1.style.transform = 'rotate(45deg) translate(2px, 2px)';
+                l2.style.opacity = '0';
+                l3.style.transform = 'rotate(-45deg) translate(4px, -5px)';
+            } else {
                 mobileMenu.classList.add('hidden');
                 mobileMenu.classList.remove('flex');
                 document.body.classList.remove('overflow-hidden');
-            });
-        });
-
-        window.addEventListener('scroll', () => {
-            if (window.scrollY > 40) {
-                header.classList.remove('bg-brand-darkBg/40');
-                header.classList.add('bg-[#05070B]/95', 'shadow-2xl', 'h-16');
-            } else {
-                header.classList.remove('bg-[#05070B]/95', 'shadow-2xl', 'h-16');
-                header.classList.add('bg-brand-darkBg/40');
+                l1.style.transform = 'none';
+                l2.style.opacity = '1';
+                l3.style.transform = 'none';
             }
+        }
+        
+        if(menuBtn) menuBtn.addEventListener('click', toggleMenu);
+        document.querySelectorAll('.mobile-link').forEach(link => {
+            link.addEventListener('click', toggleMenu);
         });
 
-        // 3. Office Directory Tab Switching Engine
+        // 3. Tab Switching Interface Logic for Branches
         function switchOfficeTab(branch) {
             const btnKerala = document.getElementById('tab-btn-kerala');
             const btnPunjab = document.getElementById('tab-btn-punjab');
@@ -360,64 +418,86 @@
             const panelPunjab = document.getElementById('panel-punjab');
 
             if (branch === 'kerala') {
-                btnKerala.className = "flex-1 text-xs uppercase tracking-[0.18em] py-3.5 rounded-full font-bold transition-all duration-500 bg-brand-gold text-brand-darkBg shadow-lg";
-                btnPunjab.className = "flex-1 text-xs uppercase tracking-[0.18em] py-3.5 rounded-full font-semibold transition-all duration-500 text-gray-400 hover:text-white";
-                panelKerala.classList.replace('hidden', 'block');
-                panelPunjab.classList.replace('block', 'hidden');
+                btnKerala.className = "flex-1 text-xs uppercase tracking-[0.18em] py-3.5 font-bold transition-all duration-300 bg-brand-gold text-brand-darkBg shadow-lg";
+                btnPunjab.className = "flex-1 text-xs uppercase tracking-[0.18em] py-3.5 font-semibold transition-all duration-300 text-gray-400 hover:text-white";
+                panelKerala.classList.remove('hidden');
+                panelPunjab.classList.add('hidden');
             } else {
-                btnPunjab.className = "flex-1 text-xs uppercase tracking-[0.18em] py-3.5 rounded-full font-bold transition-all duration-500 bg-brand-gold text-brand-darkBg shadow-lg";
-                btnKerala.className = "flex-1 text-xs uppercase tracking-[0.18em] py-3.5 rounded-full font-semibold transition-all duration-500 text-gray-400 hover:text-white";
-                panelPunjab.classList.replace('hidden', 'block');
-                panelKerala.classList.replace('block', 'hidden');
+                btnPunjab.className = "flex-1 text-xs uppercase tracking-[0.18em] py-3.5 font-bold transition-all duration-300 bg-brand-gold text-brand-darkBg shadow-lg";
+                btnKerala.className = "flex-1 text-xs uppercase tracking-[0.18em] py-3.5 font-semibold transition-all duration-300 text-gray-400 hover:text-white";
+                panelPunjab.classList.remove('hidden');
+                panelKerala.classList.add('hidden');
             }
         }
 
-        // 4. Dynamic Gallery Builder (With First Frame Vertical/Asymmetric Aspect Rule)
+        // 4. Image Gallery Creation Framework
         const galleryImages = [
-            { local: 'assets/images/1.jpg', fallback: 'https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=800&q=80', alt: 'Feature 1 Vertical Aspect' },
-            { local: 'assets/images/2.jpg', fallback: 'https://images.unsplash.com/photo-1533105079780-92b9be482077?auto=format&fit=crop&w=800&q=80', alt: 'Feature 2' },
-            { local: 'assets/images/3.jpg', fallback: 'https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=800&q=80', alt: 'Feature 3' },
-            { local: 'assets/images/4.jpg', fallback: 'https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?auto=format&fit=crop&w=800&q=80', alt: 'Feature 4' },
-            { local: 'assets/images/5.jpg', fallback: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=800&q=80', alt: 'Feature 5' },
-            { local: 'assets/images/6.jpg', fallback: 'https://images.unsplash.com/photo-1519681393784-d120267933ba?auto=format&fit=crop&w=800&q=80', alt: 'Feature 6' },
+            { fallback: 'https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=800&q=80', alt: 'Premium Travel Escape One' },
+            { fallback: 'https://images.unsplash.com/photo-1533105079780-92b9be482077?auto=format&fit=crop&w=800&q=80', alt: 'Premium Travel Escape Two' },
+            { fallback: 'https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=800&q=80', alt: 'Premium Travel Escape Three' },
+            { fallback: 'https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?auto=format&fit=crop&w=800&q=80', alt: 'Premium Travel Escape Four' },
+            { fallback: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=800&q=80', alt: 'Premium Travel Escape Five' },
+            { fallback: 'https://images.unsplash.com/photo-1519681393784-d120267933ba?auto=format&fit=crop&w=800&q=80', alt: 'Premium Travel Escape Six' },
         ];
 
         const galleryGrid = document.getElementById('gallery-grid');
-        galleryImages.forEach((img, i) => {
-            // Check if it's the first element -> apply luxurious custom height span parameter
-            const layoutClass = i === 0 ? 'sm:row-span-2 aspect-[3/4] sm:aspect-auto' : 'aspect-[4/3]';
-            const html = `
-                <div class="${layoutClass} group relative overflow-hidden rounded-none bg-brand-darkBg shadow-2xl cursor-zoom-in border border-white/[0.04]" onclick="openLightbox(${i})">
-                    <img src="${img.local}" data-fallback="${img.fallback}" onerror="this.onerror=null;this.src=this.dataset.fallback;" alt="${img.alt}" loading="lazy" class="w-full h-full object-cover transition-transform duration-[1.2s] ease-out group-hover:scale-103">
-                    <div class="absolute inset-0 bg-brand-darkBg/10 group-hover:bg-brand-darkBg/40 transition-colors duration-500"></div>
-                </div>`;
-            galleryGrid.insertAdjacentHTML('beforeend', html);
-        });
+        if(galleryGrid) {
+            galleryImages.forEach((img, i) => {
+                const layoutClass = i === 0 ? 'sm:row-span-2 aspect-[3/4] sm:aspect-auto' : 'aspect-[4/3]';
+                const html = `
+                    <div class="${layoutClass} gallery-card group relative overflow-hidden bg-brand-darkBg shadow-2xl cursor-zoom-in border border-white/[0.04]" onclick="openLightbox(${i})">
+                        <img src="${img.fallback}" alt="${img.alt}" loading="lazy" class="w-full h-full object-cover">
+                        <div class="absolute inset-0 bg-black/10 group-hover:bg-black/30 transition-colors duration-500 flex items-center justify-center opacity-0 group-hover:opacity-100">
+                            <span class="text-[10px] uppercase tracking-[0.2em] bg-brand-darkBg/80 px-4 py-2 border border-brand-gold/30 text-brand-gold">Enlarge View</span>
+                        </div>
+                    </div>`;
+                galleryGrid.insertAdjacentHTML('beforeend', html);
+            });
+        }
 
-        // 5. Lightbox Engine
+        // 5. Modal Lightbox System Execution
         let lightboxIndex = 0;
-        function openLightbox(index) {
+        const lb = document.getElementById('lightbox');
+        const lbImg = document.getElementById('lightbox-img');
+
+        window.openLightbox = function(index) {
             lightboxIndex = index;
-            const gridImg = galleryGrid.children[index].querySelector('img');
-            const lbImg = document.getElementById('lightbox-img');
-            lbImg.src = gridImg.src;
-            const lb = document.getElementById('lightbox');
-            lb.classList.remove('hidden');
-            lb.classList.add('flex');
-            document.body.classList.add('overflow-hidden');
-        }
-        function closeLightbox() {
-            const lb = document.getElementById('lightbox');
-            lb.classList.add('hidden');
-            lb.classList.remove('flex');
-            document.body.classList.remove('overflow-hidden');
-        }
-        function navLightbox(dir) {
+            if(galleryGrid && lbImg && lb) {
+                const targetImg = galleryGrid.children[index].querySelector('img');
+                lbImg.src = targetImg.src;
+                lb.classList.remove('hidden');
+                lb.classList.add('flex');
+                document.body.classList.add('overflow-hidden');
+            }
+        };
+
+        window.closeLightbox = function() {
+            if(lb) {
+                lb.classList.add('hidden');
+                lb.classList.remove('flex');
+                document.body.classList.remove('overflow-hidden');
+            }
+        };
+
+        window.navLightbox = function(dir) {
             lightboxIndex = (lightboxIndex + dir + galleryImages.length) % galleryImages.length;
             openLightbox(lightboxIndex);
+        };
+
+        if(lb) {
+            lb.addEventListener('click', (e) => {
+                if (e.target.id === 'lightbox') closeLightbox();
+            });
         }
 
-        // 6. Compact Dynamic Destination Layout Grid Builder
+        document.addEventListener('keydown', (e) => {
+            if (!lb || lb.classList.contains('hidden')) return;
+            if (e.key === 'Escape') closeLightbox();
+            if (e.key === 'ArrowLeft') navLightbox(-1);
+            if (e.key === 'ArrowRight') navLightbox(1);
+        });
+
+        // 6. Dynamic Destination Pipeline Grid Module
         const destinations = [
             { name: "Kashmir", img: "https://images.unsplash.com/photo-1595815771614-ade9d652a65d?auto=format&fit=crop&w=600&q=80" },
             { name: "Kerala", img: "https://images.unsplash.com/photo-1602216056096-3b40cc0c9944?auto=format&fit=crop&w=600&q=80" },
@@ -432,21 +512,22 @@
         ];
 
         const destGridContainer = document.getElementById('destination-grid');
-        destinations.forEach((dest) => {
-            const message = encodeURIComponent(`Hello Arappurayil Travel Agency, I want to book a trip to ${dest.name}.`);
-            const html = `
-                <a href="https://wa.me/916238305540?text=${message}" target="_blank" class="group relative block overflow-hidden aspect-[4/5] bg-[#05070B] border border-white/[0.04]">
-                    <img src="${dest.img}" alt="${dest.name}" loading="lazy" class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105">
-                    <div class="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent"></div>
-                    <div class="absolute inset-0 p-4 flex flex-col justify-end">
-                        <h3 class="text-sm md:text-base font-serif tracking-wide text-white">${dest.name}</h3>
-                    </div>
-                </a>
-            `;
-            destGridContainer.insertAdjacentHTML('beforeend', html);
-        });
+        if(destGridContainer) {
+            destinations.forEach((dest) => {
+                const message = encodeURIComponent(`Hello Arappurayil Travel Agency, I want to book a custom tour package for ${dest.name}.`);
+                const html = `
+                    <a href="https://wa.me/916238305540?text=${message}" target="_blank" rel="noopener" class="group relative block overflow-hidden aspect-[4/5] bg-[#05070B] border border-white/[0.04]">
+                        <img src="${dest.img}" alt="${dest.name}" loading="lazy" class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black via-black/10 to-transparent"></div>
+                        <div class="absolute inset-0 p-4 flex flex-col justify-end">
+                            <h3 class="text-sm font-serif tracking-wide text-white group-hover:text-brand-gold transition-colors">${dest.name}</h3>
+                        </div>
+                    </a>`;
+                destGridContainer.insertAdjacentHTML('beforeend', html);
+            });
+        }
 
-        // 7. Scroll Animation Engine Setup
+        // 7. Viewport Entrance Animation Observers
         const observerOptions = { root: null, rootMargin: '0px', threshold: 0.05 };
         const observer = new IntersectionObserver((entries, obs) => {
             entries.forEach(entry => {
@@ -465,6 +546,7 @@
                 }
             });
         }, { threshold: 0.2 });
+        
         document.querySelectorAll('.route-observe').forEach(el => routeObserver.observe(el));
     </script>
 </body>
