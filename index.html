@@ -31,9 +31,9 @@
         }
     </script>
     <style>
-        /* Light dynamic vignette to give context and visibility to the video background */
+        /* Modified gradient to move the dark fade further down, keeping more of the video visible */
         .hero-premium-overlay {
-            background: linear-gradient(to bottom, rgba(7, 10, 15, 0.3) 0%, rgba(7, 10, 15, 0.45) 50%, rgba(7, 10, 15, 0.95) 100%);
+            background: linear-gradient(to bottom, rgba(7, 10, 15, 0.1) 0%, rgba(7, 10, 15, 0.25) 75%, rgba(7, 10, 15, 0.95) 98%, rgba(7, 10, 15, 1) 100%);
         }
         /* Cinematic text protection shadow */
         .text-protection-shadow {
@@ -80,9 +80,9 @@
                 </a>
                 
                 <!-- Hamburger Button -->
-                <button id="menu-btn" class="md:hidden flex flex-col justify-between w-6 h-4.5 text-white focus:outline-none z-50">
+                <button id="menu-btn" class="md:hidden flex flex-col justify-between w-6 h-5 text-white focus:outline-none z-50">
                     <span class="w-6 h-0.5 bg-white transition-transform duration-300 origin-top-left"></span>
-                    <span class="w-6 h-0.5 bg-white transition-opacity duration-300 my-1.5"></span>
+                    <span class="w-6 h-0.5 bg-white transition-opacity duration-300"></span>
                     <span class="w-6 h-0.5 bg-white transition-transform duration-300 origin-bottom-left"></span>
                 </button>
             </div>
@@ -101,19 +101,18 @@
     <!-- Hero Section -->
     <section id="home" class="relative min-h-screen w-full flex flex-col justify-between pt-20 md:pt-28 pb-10 overflow-hidden">
         
-        <!-- Video Layer Container: Fully adaptive across standard PC aspect ratios and strict Mobile Views -->
-        <div class="absolute inset-0 w-full h-[50vh] md:h-full object-cover z-0 transition-all duration-500">
-            <!-- Background loop containing your updated mountain view path -->
+        <!-- Video Layer Container: Set to 65vh for broad exposure of the scenery layout -->
+        <div class="absolute inset-0 w-full h-[65vh] md:h-full object-cover z-0 transition-all duration-500">
             <video autoplay loop muted playsinline class="w-full h-full object-cover origin-center">
-                <source src="Herovideo.mp4" type="video/mp4">
+                <source src="Herovideo.mp4?v=2" type="video/mp4">
                 Your browser does not support the video tag.
             </video>
             <!-- Premium High Visibility Gradient Layer -->
             <div class="absolute inset-0 hero-premium-overlay"></div>
         </div>
 
-        <!-- Spacer to push typography content clear of header/video crops on mobile viewports -->
-        <div class="h-[38vh] md:hidden z-10 pointer-events-none"></div>
+        <!-- Layout dynamic placement container for text positioning adjustments -->
+        <div class="h-[52vh] md:hidden z-10 pointer-events-none"></div>
 
         <!-- Hero Content Wrapper Layout -->
         <div class="relative z-10 max-w-7xl mx-auto px-6 w-full my-auto grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center md:items-end">
