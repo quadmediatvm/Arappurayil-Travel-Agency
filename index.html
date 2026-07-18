@@ -618,6 +618,104 @@
       color: var(--gold-light);
     }
 
+    /* ==============================
+       OTHER SERVICES COMPONENT
+    ============================== */
+    .services-section {
+      padding: 40px 5% 80px;
+      max-width: 1400px;
+      margin: 0 auto;
+      position: relative;
+      z-index: 5;
+    }
+    .services-flex-container {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      background: rgba(17, 17, 17, 0.4);
+      border: 1px solid var(--glass-border);
+      border-radius: var(--radius-lg);
+      padding: 50px 40px;
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+    }
+    .service-item {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      position: relative;
+      padding: 0 10px;
+    }
+    .service-item:not(:last-child)::after {
+      content: '';
+      position: absolute;
+      right: -10px;
+      top: 10%;
+      height: 80%;
+      width: 1px;
+      background: linear-gradient(to bottom, transparent, rgba(255, 255, 255, 0.15), transparent);
+    }
+    .service-icon-circle {
+      width: 85px;
+      height: 85px;
+      border-radius: 50%;
+      border: 2px solid var(--gold);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 20px;
+      position: relative;
+      background: rgba(0, 0, 0, 0.3);
+      box-shadow: 0 0 20px rgba(201, 162, 39, 0.05);
+      transition: transform 0.3s var(--transition), box-shadow 0.3s;
+    }
+    .service-icon-circle::before {
+      content: '';
+      position: absolute;
+      inset: 4px;
+      border-radius: 50%;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+    }
+    .service-item:hover .service-icon-circle {
+      transform: scale(1.05);
+      box-shadow: var(--shadow-gold);
+    }
+    .service-icon-circle i {
+      font-size: 32px;
+      color: var(--white);
+    }
+    .service-label {
+      font-family: var(--font-heading);
+      font-size: clamp(0.85rem, 1.2vw, 1.05rem);
+      font-weight: 700;
+      color: var(--white);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      line-height: 1.4;
+      max-width: 200px;
+    }
+    @media (max-width: 991px) {
+      .services-flex-container {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 40px 20px;
+        padding: 40px 20px;
+      }
+      .service-item:nth-child(2)::after { display: none; }
+    }
+    @media (max-width: 560px) {
+      .services-flex-container {
+        grid-template-columns: 1fr;
+        gap: 36px;
+      }
+      .service-item:not(:last-child)::after { display: none; }
+      .service-icon-circle { width: 75px; height: 75px; margin-bottom: 14px; }
+      .service-icon-circle i { font-size: 26px; }
+    }
+
     /* --- ANIMATIONS --- */
     @keyframes scrollLeft {
       0% { transform: translateX(0); }
@@ -900,19 +998,19 @@
   <section class="stats-section">
     <div class="stats-grid">
       <div class="stat-item">
-        <div class="stat-number">1000+</div>
+        <div class="stat-number" data-target="1000">0+</div>
         <div class="stat-label">Trips Completed</div>
       </div>
       <div class="stat-item">
-        <div class="stat-number">5000+</div>
+        <div class="stat-number" data-target="5000">0+</div>
         <div class="stat-label">Happy Customers</div>
       </div>
       <div class="stat-item">
-        <div class="stat-number">100+</div>
+        <div class="stat-number" data-target="100">0+</div>
         <div class="stat-label">Hotel &amp; Transport Partners</div>
       </div>
       <div class="stat-item">
-        <div class="stat-number">250+</div>
+        <div class="stat-number" data-target="250">0+</div>
         <div class="stat-label">Destinations</div>
       </div>
     </div>
@@ -1105,18 +1203,49 @@
           <div class="dest-overlay"><span class="dest-name">Sikkim</span></div>
         </div>
         
-                <div class="dest-card">
+        <div class="dest-card">
           <img src="https://i.pinimg.com/736x/f1/27/03/f12703a875f3dfdbed4edf95af1b5b79.jpg" alt="Sikkim">
           <div class="dest-overlay"><span class="dest-name">Uttarakhand</span></div>
         </div>
-                <div class="dest-card">
+        <div class="dest-card">
           <img src="https://i.pinimg.com/1200x/c9/51/8c/c9518c6754c82f797ece4a8cca5421d8.jpg" alt="Sikkim">
           <div class="dest-overlay"><span class="dest-name">Andaman Nicobar Island</span></div>
         </div>
-                <div class="dest-card">
+        <div class="dest-card">
           <img src="https://i.pinimg.com/736x/d5/52/7c/d5527cb84cc7109e6964d63ff3c55263.jpg" alt="Sikkim">
           <div class="dest-overlay"><span class="dest-name">Varanasi</span></div>
         </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- OTHER SERVICES SECTION -->
+  <section class="services-section">
+    <h2 class="section-title">Other <span>Services</span></h2>
+    <div class="services-flex-container">
+      <div class="service-item">
+        <div class="service-icon-circle">
+          <i class="fa-solid fa-earth-americas"></i>
+        </div>
+        <div class="service-label">Tour Packages Across India</div>
+      </div>
+      <div class="service-item">
+        <div class="service-icon-circle">
+          <i class="fa-solid fa-car"></i>
+        </div>
+        <div class="service-label">Cab &amp; Traveller Booking</div>
+      </div>
+      <div class="service-item">
+        <div class="service-icon-circle">
+          <i class="fa-solid fa-hotel"></i>
+        </div>
+        <div class="service-label">Hotel Check-In</div>
+      </div>
+      <div class="service-item">
+        <div class="service-icon-circle">
+          <i class="fa-solid fa-ticket"></i>
+        </div>
+        <div class="service-label">Ticket Bookings</div>
       </div>
     </div>
   </section>
@@ -1402,6 +1531,52 @@
         }
       });
     });
+
+    // NUMBER LOADING ANIMATION ON SCROLL
+    (function() {
+      const statsSection = document.querySelector('.stats-section');
+      const counters = document.querySelectorAll('.stat-number');
+      if (!statsSection || counters.length === 0) return;
+
+      let animated = false;
+
+      const startCounting = () => {
+        counters.forEach(counter => {
+          const target = parseInt(counter.getAttribute('data-target'), 10);
+          const duration = 2000; // Animation duration in milliseconds
+          const startTime = performance.now();
+
+          const updateNumber = (currentTime) => {
+            const elapsedTime = currentTime - startTime;
+            if (elapsedTime >= duration) {
+              counter.textContent = target + '+';
+              return;
+            }
+            const progress = elapsedTime / duration;
+            // Ease out quad formula for dynamic slow down
+            const easeProgress = progress * (2 - progress);
+            const currentValue = Math.floor(easeProgress * target);
+            
+            counter.textContent = currentValue + '+';
+            requestAnimationFrame(updateNumber);
+          };
+
+          requestAnimationFrame(updateNumber);
+        });
+      };
+
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting && !animated) {
+            animated = true;
+            startCounting();
+            observer.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.2 });
+
+      observer.observe(statsSection);
+    })();
   </script>
 </body>
 </html>
