@@ -1245,60 +1245,67 @@
     </div>
   </div>
 
-  <!-- HERO SECTION (Featuring fully viewable containment foreground video) -->
+<!-- HERO SECTION -->
   <section id="home" aria-label="Hero section">
     
-    <!-- Top: Clean cinematic video container -->
+    <!-- Top Section: 100% Widescreen Video Box -->
     <div class="hero-video-wrap">
-      <!-- Ambient blurred backdrop (Desktop only) -->
-      <video class="video-bg-ambient hidden md:block" autoplay muted loop playsinline preload="metadata" aria-hidden="true">
+      <!-- Layer 1: Ambient Background Effect -->
+      <video class="video-bg-ambient" autoplay muted loop playsinline preload="metadata" aria-hidden="true">
         <source src="Herovideo.mp4" type="video/mp4" />
       </video>
-      <!-- Crisp containment foreground -->
-      <video class="video-fg-main" autoplay muted loop playsinline preload="metadata" aria-hidden="true" id="hero-video">
+      <!-- Layer 2: Main Foreground Video -->
+      <video class="video-fg-main" autoplay muted loop playsinline preload="metadata" id="hero-video">
         <source src="Herovideo.mp4" type="video/mp4" />
       </video>
-      <!-- Gold glow overlay on video -->
+      <!-- Overlays -->
       <div class="hero-overlay-gold" aria-hidden="true"></div>
-      
-      <!-- Scroll indicator inside the video wrapper -->
-      <div class="scroll-indicator" aria-hidden="true">
-        <span class="scroll-text">Scroll Down</span>
-        <div class="scroll-line"></div>
-      </div>
     </div>
 
-    <!-- Decorative elements behind text -->
+    <!-- Floating Background Particles & Blobs -->
+    <div id="particles" class="particles" aria-hidden="true"></div>
     <div class="blob blob-1" aria-hidden="true"></div>
     <div class="blob blob-2" aria-hidden="true"></div>
-    <div class="particles" id="particles" aria-hidden="true"></div>
 
-    <!-- Bottom: Pure Copy Section with Mouse Parallax (No video overlay) -->
-    <div class="hero-content" id="hero-parallax-content">
-      <div class="hero-eyebrow" aria-hidden="true">
+    <!-- Bottom Section: Premium Copy Layout -->
+    <div class="hero-content">
+      
+      <!-- Eyebrow Badge -->
+      <div class="hero-eyebrow">
         <span>Handcrafted Journeys</span>
       </div>
+
+      <!-- Typography Header -->
       <h1 class="hero-title">
         Journey Beyond the <span class="gold-word italic">Ordinary</span>
       </h1>
+
+      <!-- Descriptive Subtitle -->
       <p class="hero-subtitle">
         Arappurayil crafts custom travel experiences — from Kerala's tranquil backwaters to the high snow peaks of Kashmir and Sikkim.
       </p>
+
+      <!-- Premium Dynamic CTA Elements -->
       <div class="hero-cta-group">
-        <a href="#destinations" class="btn-primary ripple-btn" role="button">
+        <a href="#destinations" class="btn-primary ripple-btn" aria-label="Explore Destinations">
           <span>Explore Destinations</span>
           <i class="fa-solid fa-arrow-right" aria-hidden="true"></i>
         </a>
-        <a href="#contact" class="btn-glass ripple-btn" role="button">
-          <i class="fa-solid fa-phone-volume" aria-hidden="true"></i>
+        
+        <a href="#contact" class="btn-glass ripple-btn" aria-label="Get in touch with us">
+          <i class="fa-solid fa-phone" style="color: var(--gold);" aria-hidden="true"></i>
           <span>Get in Touch</span>
         </a>
       </div>
+
     </div>
 
+    <!-- Scroll Indicator -->
+    <div class="scroll-indicator" aria-hidden="true">
+      <span class="scroll-text">Scroll</span>
+      <div class="scroll-line"></div>
+    </div>
   </section>
-
-<div class="divider" aria-hidden="true"></div>
 
   <!-- GALLERY SECTION (WELL-ARRANGED GRID) -->
   <section id="gallery" aria-label="Photo gallery">
