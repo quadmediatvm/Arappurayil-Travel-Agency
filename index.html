@@ -78,7 +78,7 @@
       --glass-dark: rgba(0,0,0,0.4);
       --font-heading: 'Outfit', sans-serif;
       --font-body: 'Poppins', sans-serif;
-      --nav-h: 80px;
+      --nav-h: 90px; /* Enhanced header height to balance structural weight */
       --radius: 16px;
       --radius-lg: 24px;
       --shadow: 0 20px 60px rgba(0,0,0,0.4);
@@ -157,7 +157,7 @@
     }
 
     /* ==============================
-       NAVIGATION
+       NAVIGATION (FULLY BLACK & EXPANDED BRANDING)
     ============================== */
     #navbar {
       position: fixed; top: 0; left: 0; right: 0;
@@ -165,46 +165,50 @@
       height: var(--nav-h);
       padding: 0 5%;
       display: flex; align-items: center; justify-content: space-between;
-      background: rgba(0, 0, 0, 0.4);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
-      border-bottom: 1px solid var(--glass-border);
-      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
-      transition: background 0.4s var(--ease-out-expo), box-shadow 0.4s var(--ease-out-expo);
+      background: #000000; /* Force deep black on initial state */
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      box-shadow: 0 4px 30px rgba(0, 0, 0, 0.8);
+      transition: height 0.4s var(--ease-out-expo);
     }
     #navbar.scrolled {
-      background: #000000;
+      background: #000000; /* Stays persistent black */
       box-shadow: 0 8px 32px rgba(0, 0, 0, 0.95);
     }
 
     .nav-logo {
-      display: flex; align-items: center; gap: 12px;
+      display: flex; align-items: center; gap: 16px; /* Dynamic spacing */
       text-decoration: none;
     }
     .nav-logo-img {
-      width: 48px; height: 48px;
+      width: clamp(52px, 5vw, 64px); /* Scales proportionally up to 64px */
+      height: clamp(52px, 5vw, 64px);
       border-radius: 50%; overflow: hidden;
-      border: 1.5px solid var(--gold);
+      border: 2px solid var(--gold);
       transition: transform 0.3s var(--transition), box-shadow 0.3s;
+      flex-shrink: 0;
     }
     .nav-logo-img:hover {
       transform: scale(1.05);
       box-shadow: var(--shadow-gold);
     }
     .nav-logo-img img { width: 100%; height: 100%; object-fit: cover; }
+    
     .nav-logo-text {
       display: flex; flex-direction: column;
-      line-height: 1.2;
+      line-height: 1.15;
     }
     .nav-brand {
       font-family: var(--font-heading);
-      font-size: 1rem; font-weight: 700;
-      color: var(--white); letter-spacing: 0.03em;
+      font-size: clamp(1.25rem, 2vw, 1.65rem); /* Significantly enlarged responsive size */
+      font-weight: 800;
+      color: var(--white); letter-spacing: 0.02em;
     }
     .nav-sub {
-      font-size: 0.6rem; font-weight: 400;
-      color: var(--gold); letter-spacing: 0.25em;
+      font-size: clamp(0.65rem, 0.9vw, 0.75rem); /* Balanced descriptor subtext */
+      font-weight: 500;
+      color: var(--gold); letter-spacing: 0.28em;
       text-transform: uppercase;
+      margin-top: 1px;
     }
 
     .nav-links {
@@ -253,7 +257,7 @@
     .hamburger {
       display: none;
       flex-direction: column; gap: 5px;
-      cursor: pointer; padding: 8px;
+      cursor: pointer; padding: 10px;
       background: var(--glass); border: 1px solid var(--glass-border);
       border-radius: 10px; backdrop-filter: blur(10px);
       transition: background 0.3s;
@@ -271,7 +275,7 @@
     /* Mobile Menu */
     .mobile-menu {
       position: fixed; top: var(--nav-h); left: 0; right: 0;
-      background: rgba(8,8,8,0.95);
+      background: rgba(0, 0, 0, 0.98); /* Solid background for premium fidelity */
       backdrop-filter: blur(32px) saturate(1.8);
       -webkit-backdrop-filter: blur(32px) saturate(1.8);
       border-bottom: 1px solid var(--glass-border);
@@ -280,7 +284,7 @@
       transform: translateY(-20px) scaleY(0.95);
       opacity: 0; pointer-events: none;
       transform-origin: top;
-      transition: transform 0.45s var(--ease-out-expo), opacity 0.35s;
+      transition: transform 0.45s var(--ease-out-expo), opacity 0.35s, top 0.4s var(--ease-out-expo);
       z-index: 999;
     }
     .mobile-menu.open {
@@ -320,6 +324,7 @@
 
     /* Responsive Navigation styling */
     @media (max-width: 991px) {
+      :root { --nav-h: 85px; } /* Clean layout adjustments */
       #navbar { padding: 0 4%; }
       .nav-links { display: none; }
       .nav-cta { display: none; }
@@ -327,12 +332,13 @@
     }
 
     @media (max-width: 480px) {
-      #navbar { padding: 0 16px; height: 70px; }
-      :root { var(--nav-h): 70px; }
-      .nav-logo-img { width: 38px; height: 38px; }
-      .nav-brand { font-size: 0.9rem; }
-      .nav-sub { font-size: 0.55rem; letter-spacing: 0.18em; }
-      .hamburger { padding: 6px; gap: 4px; }
+      :root { --nav-h: 76px; } /* Ensures structural density holds large identity assets */
+      #navbar { padding: 0 16px; }
+      .nav-logo { gap: 12px; }
+      .nav-logo-img { width: 46px; height: 46px; border-width: 1.5px; }
+      .nav-brand { font-size: 1.2rem; }
+      .nav-sub { font-size: 0.58rem; letter-spacing: 0.22em; }
+      .hamburger { padding: 8px; gap: 4px; }
       .hamburger span { width: 18px; }
       .hamburger.open span:nth-child(1) { transform: translateY(5.5px) rotate(45deg); }
       .hamburger.open span:nth-child(3) { transform: translateY(-5.5px) rotate(-45deg); }
@@ -341,7 +347,7 @@
     }
 
     /* ==============================
-       HERO SECTION (FULL WINDOW VISIBILITY)
+       HERO SECTION (ADJUSTED FOR HEADER)
     ============================== */
     .hero {
       position: relative;
@@ -1459,13 +1465,14 @@
     const yearEl = document.getElementById('year');
     if (yearEl) yearEl.textContent = new Date().getFullYear();
 
-    // NAVBAR SCROLL STATE
+    // NAVBAR SCROLL STATE (CLEANED UP UPWARD VALUE TRANSITIONS)
     (function() {
       const nav = document.getElementById('navbar');
       if (!nav) return;
       let ticking = false;
       function update() {
         const s = window.scrollY;
+        // Keeps state fully solid black instead of swapping filters
         s > 60 ? nav.classList.add('scrolled') : nav.classList.remove('scrolled');
         ticking = false;
       }
@@ -1482,7 +1489,7 @@
             links.forEach(l => l.classList.toggle('active', l.dataset.section === id));
           }
         });
-      }, { threshold: 0.25, rootMargin: '-80px 0px -45% 0px' });
+      }, { threshold: 0.25, rootMargin: '-90px 0px -45% 0px' });
       ['home','destinations','reviews','contact'].forEach(id => {
         const el = document.getElementById(id);
         if (el) obs.observe(el);
@@ -1526,7 +1533,7 @@
         const target = document.querySelector(this.getAttribute('href'));
         if (target) {
           e.preventDefault();
-          const top = target.getBoundingClientRect().top + window.scrollY - 80;
+          const top = target.getBoundingClientRect().top + window.scrollY - 90;
           window.scrollTo({ top, behavior: 'smooth' });
         }
       });
@@ -1543,7 +1550,7 @@
       const startCounting = () => {
         counters.forEach(counter => {
           const target = parseInt(counter.getAttribute('data-target'), 10);
-          const duration = 2000; // Animation duration in milliseconds
+          const duration = 2000;
           const startTime = performance.now();
 
           const updateNumber = (currentTime) => {
@@ -1553,7 +1560,6 @@
               return;
             }
             const progress = elapsedTime / duration;
-            // Ease out quad formula for dynamic slow down
             const easeProgress = progress * (2 - progress);
             const currentValue = Math.floor(easeProgress * target);
             
