@@ -375,20 +375,23 @@
     ============================== */
     #home {
       position: relative;
-      height: 100vh;
-      display: flex; align-items: center; justify-content: center;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      background: #080808;
       overflow: hidden;
-      background: var(--black);
+      padding-top: var(--nav-h);
     }
 
-    /* Dual-layer Video container to prevent cropping & keep ambient atmosphere */
+    /* Video Wrapper occupying the top portion */
     .hero-video-wrap {
-      position: absolute; inset: 0;
-      width: 100%; height: 100%;
-      z-index: 0;
-      display: flex; align-items: center; justify-content: center;
+      position: relative;
+      width: 100%;
+      height: 60vh;
       overflow: hidden;
+      background: #000000;
     }
+
     /* Layer 1: Ambient Blurred Background (fills empty areas) */
     .video-bg-ambient {
       position: absolute; inset: 0;
@@ -399,23 +402,24 @@
       z-index: 1;
       pointer-events: none;
     }
-    /* Layer 2: Main crisp non-cropped centered video */
+    /* Layer 2: Main video */
     .video-fg-main {
       position: relative;
       width: 100%; height: 100%;
-      object-fit: contain;
+      object-fit: cover;
       z-index: 2;
       pointer-events: none;
     }
 
-    /* Overlays */
-    .hero-overlay {
+    /* Video Overlays (applied only on the video wrapper) */
+    .hero-video-wrap::after {
+      content: '';
       position: absolute; inset: 0; z-index: 3;
       background: linear-gradient(
         to bottom,
-        rgba(8,8,8,0.5) 0%,
-        rgba(8,8,8,0.25) 50%,
-        rgba(8,8,8,0.7) 100%
+        rgba(8,8,8,0.2) 0%,
+        rgba(8,8,8,0) 60%,
+        rgba(8,8,8,0.5) 100%
       );
       pointer-events: none;
     }
@@ -425,15 +429,15 @@
       pointer-events: none;
     }
 
-    /* Floating blobs */
+    /* Floating blobs inside hero background */
     .blob {
       position: absolute; border-radius: 50%;
-      filter: blur(90px); opacity: 0.1; z-index: 2;
+      filter: blur(90px); opacity: 0.08; z-index: 2;
       animation: blobFloat 8s ease-in-out infinite;
       pointer-events: none;
     }
-    .blob-1 { width: 450px; height: 450px; background: var(--gold); top: 10%; left: -5%; animation-delay: 0s; }
-    .blob-2 { width: 350px; height: 350px; background: #fff; bottom: 10%; right: -5%; animation-delay: 3s; }
+    .blob-1 { width: 400px; height: 400px; background: var(--gold); top: 50%; left: -5%; animation-delay: 0s; }
+    .blob-2 { width: 300px; height: 300px; background: #fff; bottom: 10%; right: -5%; animation-delay: 3s; }
     @keyframes blobFloat {
       0%, 100% { transform: translateY(0) scale(1); }
       50% { transform: translateY(-25px) scale(1.04); }
@@ -453,11 +457,14 @@
       100% { transform: translateY(-5vh) translateX(30px) scale(1.5); opacity: 0; }
     }
 
-    /* Hero content */
+    /* Hero content - Cleanly placed below video */
     .hero-content {
       position: relative; z-index: 5;
       text-align: center;
-      max-width: 900px; padding: 0 24px;
+      max-width: 900px; 
+      margin: 0 auto;
+      padding: 60px 24px 70px;
+      box-sizing: border-box;
     }
     .hero-eyebrow {
       display: inline-flex; align-items: center; gap: 10px;
@@ -548,13 +555,13 @@
 
     /* Scroll indicator */
     .scroll-indicator {
-      position: absolute; bottom: 30px; left: 50%; transform: translateX(-50%);
+      position: absolute; bottom: 20px; left: 50%; transform: translateX(-50%);
       z-index: 10; display: flex; flex-direction: column; align-items: center; gap: 8px;
-      opacity: 0; animation: fadeIn 1s 1.5s ease forwards;
+      opacity: 1;
     }
     .scroll-text {
       font-size: 0.6rem; letter-spacing: 0.35em; text-transform: uppercase;
-      color: rgba(255,255,255,0.4);
+      color: rgba(255,255,255,0.7);
     }
     .scroll-line {
       width: 1px; height: 36px; background: linear-gradient(to bottom, var(--gold), transparent);
@@ -567,35 +574,33 @@
       100% { transform: scaleY(0); transform-origin: bottom; }
     }
 
-    /* Mobile Adaptations */
-    @media (max-width: 767px) {
-      #home {
-        height: auto;
-        min-height: 100vh;
-        flex-direction: column;
-        align-items: stretch;
-        justify-content: flex-start;
-        padding-top: 100px;
-        padding-bottom: 60px;
-      }
+    /* Mobile Adaptations for Hero Section */
+    @media (max-width: 768px) {
       .hero-video-wrap {
-        position: relative;
-        width: 100%; height: auto;
-        aspect-ratio: 16 / 9;
-        margin-bottom: 24px;
-        border-radius: 12px;
-        overflow: hidden;
+        height: 45vh;
       }
-      .video-bg-ambient { display: none; }
-      .video-fg-main {
-        position: static;
-        width: 100%; height: 100%;
-        object-fit: contain;
-      }
-      .hero-overlay, .hero-overlay-gold { display: none; }
-      .scroll-indicator { display: none; }
       .hero-content {
-        padding: 0 16px;
+        padding: 40px 16px 60px;
+      }
+      .hero-title {
+        font-size: 2.2rem !important;
+        line-height: 1.2 !important;
+      }
+      .hero-subtitle {
+        font-size: 0.9rem !important;
+        margin-bottom: 24px;
+      }
+      .hero-cta-group {
+        flex-direction: column;
+        width: 100%;
+        gap: 12px;
+      }
+      .hero-cta-group a {
+        width: 100%;
+        justify-content: center;
+      }
+      .scroll-indicator {
+        display: none;
       }
     }
 
@@ -1184,175 +1189,7 @@
       border-radius: 4px;
     }
     /* --- Video Layout & Visibility Optimization --- */
-#home {
-    position: relative;
-    width: 100%;
-    height: 100vh;
-    overflow: hidden;
-    background-color: #000; /* fallback black screen */
-}
-
-.hero-video-wrap {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 100%;
-    height: 100%;
-    transform: translate(-50%, -50%);
-    z-index: 1;
-}
-
-/* Force video to fill both tall vertical phone screens and widescreen monitors gracefully */
-.video-fg-main, .video-bg-ambient {
-    width: 100%;
-    height: 100%;
-    object-fit: cover; 
-}
-
-/* --- Smooth Reveal Keyframes --- */
-@keyframes dynamicReveal {
-    0% {
-        opacity: 0;
-        transform: translateY(20px);
-    }
-    100% {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-/* Apply delay styles exclusively to elements wrapping the copy/darkening overlays */
-.deferred-reveal {
-    opacity: 0; /* Keep completely hidden out of sight initially */
-    z-index: 10;
-    animation: dynamicReveal 1.2s cubic-bezier(0.25, 1, 0.5, 1) forwards;
-    
-    /* Change 3.5s to any duration you wish to keep the video completely unobstructed */
-    animation-delay: 3.5s; 
-}
-
-/* Overlays don't need translation shifts, just a clean fade-in */
-div.hero-overlay.deferred-reveal,
-div.hero-overlay-gold.deferred-reveal {
-    animation: fadeInOverlay 1.5s ease forwards;
-    animation-delay: 3.5s;
-    z-index: 2;
-}
-
-@keyframes fadeInOverlay {
-    0% { opacity: 0; }
-    100% { opacity: 0.65; } /* Balances background visibility with high contrast text legibility */
-}
-
-/* --- Mobile Responsiveness Adjustments --- */
-@media (max-width: 768px) {
-    /* Elevate mobile spacing so elements stack gracefully over portrait videos */
-    .hero-content {
-        padding: 0 1.5rem;
-    }
-    .hero-title {
-        font-size: 2.5rem !important;
-        line-height: 1.2 !important;
-    }
-    .hero-cta-group {
-        flex-direction: column;
-        width: 100%;
-        gap: 1rem;
-    }
-    .hero-cta-group a {
-        width: 100%;
-        text-align: center;
-        justify-content: center;
-    }
-}
-   /* --- Split Section Layout --- */
-.hero-split-layout {
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-    min-h: 100vh;
-    background-color: #090D14; /* Deep rich brand background */
-}
-
-/* Video Section takes up fixed premium view area without any overlapping content */
-.hero-video-wrap {
-    position: relative;
-    width: 100%;
-    height: 55vh; /* Standard high-visibility viewport framing */
-    background-color: #000;
-    overflow: hidden;
-}
-
-.video-fg-main, .video-bg-ambient {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-}
-
-/* --- Bottom Content Block Configuration (No Overlay / No Animations) --- */
-.hero-content-bottom {
-    width: 100%;
-    background-color: #090D14;
-    padding: 3rem 1.5rem;
-    box-sizing: border-box;
-}
-
-.hero-content-inner {
-    max-w: 800px;
-    margin: 0 auto;
-    text-align: center;
-}
-
-.hero-eyebrow {
-    font-size: 0.75rem;
-    text-transform: uppercase;
-    letter-spacing: 0.25em;
-    color: #D4A34F; /* Crisp clear brand gold */
-    margin-bottom: 1rem;
-    font-weight: 600;
-}
-
-.hero-title {
-    font-family: 'Playfair Display', serif;
-    font-size: 2.5rem;
-    line-height: 1.2;
-    color: #ffffff;
-    margin-bottom: 1.25rem;
-}
-
-.hero-title .gold-word {
-    color: #D4A34F;
-}
-
-.hero-subtitle {
-    font-size: 0.95rem;
-    line-height: 1.6;
-    color: #cbd5e1;
-    margin-bottom: 2rem;
-    font-weight: 300;
-}
-
-/* Call-to-action layout placement */
-.hero-cta-group {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 1.25rem;
-    flex-wrap: wrap;
-}
-
-/* --- Desktop Layout Adaptations --- */
-@media (min-width: 768px) {
-    .hero-video-wrap {
-        height: 65vh; /* Gives video more display value on wide screens */
-    }
-    .hero-title {
-        font-size: 3.75rem;
-    }
-    .hero-content-bottom {
-        padding: 4.5rem 2rem;
-    }
-}
+/* Duplicate Hero Styles Cleaned Up */
   </style>
 </head>
 <body>
@@ -1409,26 +1246,35 @@ div.hero-overlay-gold.deferred-reveal {
   </div>
 
   <!-- HERO SECTION (Featuring fully viewable containment foreground video) -->
-   <section id="home" aria-label="Hero section" class="hero-split-layout">
-  
-  <!-- Top: Pristine Video Container -->
-  <div class="hero-video-wrap">
-    <!-- Ambient blurred backdrop (Desktop only) -->
-    <video class="video-bg-ambient hidden md:block" autoplay muted loop playsinline preload="metadata" aria-hidden="true">
-      <source src="Herovideo.mp4" type="video/mp4" />
-    </video>
-    <!-- Crisp containment foreground -->
-    <video class="video-fg-main" autoplay muted loop playsinline preload="metadata" aria-hidden="true" id="hero-video">
-      <source src="Herovideo.mp4" type="video/mp4" />
-    </video>
-  </div>
+  <section id="home" aria-label="Hero section">
+    
+    <!-- Top: Clean cinematic video container -->
+    <div class="hero-video-wrap">
+      <!-- Ambient blurred backdrop (Desktop only) -->
+      <video class="video-bg-ambient hidden md:block" autoplay muted loop playsinline preload="metadata" aria-hidden="true">
+        <source src="Herovideo.mp4" type="video/mp4" />
+      </video>
+      <!-- Crisp containment foreground -->
+      <video class="video-fg-main" autoplay muted loop playsinline preload="metadata" aria-hidden="true" id="hero-video">
+        <source src="Herovideo.mp4" type="video/mp4" />
+      </video>
+      <!-- Gold glow overlay on video -->
+      <div class="hero-overlay-gold" aria-hidden="true"></div>
+      
+      <!-- Scroll indicator inside the video wrapper -->
+      <div class="scroll-indicator" aria-hidden="true">
+        <span class="scroll-text">Scroll Down</span>
+        <div class="scroll-line"></div>
+      </div>
+    </div>
 
-  <!-- Decorative elements kept out of the video bounds -->
-  <div class="particles" id="particles" aria-hidden="true"></div>
+    <!-- Decorative elements behind text -->
+    <div class="blob blob-1" aria-hidden="true"></div>
+    <div class="blob blob-2" aria-hidden="true"></div>
+    <div class="particles" id="particles" aria-hidden="true"></div>
 
-  <!-- Bottom: Pure Copy Section (No video overlay) -->
-  <div class="hero-content-bottom">
-    <div class="hero-content-inner">
+    <!-- Bottom: Pure Copy Section with Mouse Parallax (No video overlay) -->
+    <div class="hero-content" id="hero-parallax-content">
       <div class="hero-eyebrow" aria-hidden="true">
         <span>Handcrafted Journeys</span>
       </div>
@@ -1449,9 +1295,8 @@ div.hero-overlay-gold.deferred-reveal {
         </a>
       </div>
     </div>
-  </div>
 
-</section>
+  </section>
 
 <div class="divider" aria-hidden="true"></div>
 
