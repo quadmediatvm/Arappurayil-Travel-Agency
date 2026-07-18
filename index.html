@@ -1190,6 +1190,94 @@ div.hero-overlay-gold.deferred-reveal {
         justify-content: center;
     }
 }
+    /* --- Split Section Layout --- */
+.hero-split-layout {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    min-h: 100vh;
+    background-color: #090D14; /* Deep rich brand background */
+}
+
+/* Video Section takes up fixed premium view area without any overlapping content */
+.hero-video-wrap {
+    position: relative;
+    width: 100%;
+    height: 55vh; /* Standard high-visibility viewport framing */
+    background-color: #000;
+    overflow: hidden;
+}
+
+.video-fg-main, .video-bg-ambient {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* --- Bottom Content Block Configuration (No Overlay / No Animations) --- */
+.hero-content-bottom {
+    width: 100%;
+    background-color: #090D14;
+    padding: 3rem 1.5rem;
+    box-sizing: border-box;
+}
+
+.hero-content-inner {
+    max-w: 800px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.hero-eyebrow {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.25em;
+    color: #D4A34F; /* Crisp clear brand gold */
+    margin-bottom: 1rem;
+    font-weight: 600;
+}
+
+.hero-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.5rem;
+    line-height: 1.2;
+    color: #ffffff;
+    margin-bottom: 1.25rem;
+}
+
+.hero-title .gold-word {
+    color: #D4A34F;
+}
+
+.hero-subtitle {
+    font-size: 0.95rem;
+    line-height: 1.6;
+    color: #cbd5e1;
+    margin-bottom: 2rem;
+    font-weight: 300;
+}
+
+/* Call-to-action layout placement */
+.hero-cta-group {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1.25rem;
+    flex-wrap: wrap;
+}
+
+/* --- Desktop Layout Adaptations --- */
+@media (min-width: 768px) {
+    .hero-video-wrap {
+        height: 65vh; /* Gives video more display value on wide screens */
+    }
+    .hero-title {
+        font-size: 3.75rem;
+    }
+    .hero-content-bottom {
+        padding: 4.5rem 2rem;
+    }
+}
   </style>
 </head>
 <body>
@@ -1246,35 +1334,31 @@ div.hero-overlay-gold.deferred-reveal {
   </div>
 
   <!-- HERO SECTION (Featuring fully viewable containment foreground video) -->
-  <section id="home" aria-label="Hero section">
-    <div class="hero-video-wrap">
-      <!-- Ambient blurred backdrop (Hidden on mobile to optimize performance) -->
-      <video class="video-bg-ambient hidden md:block" autoplay muted loop playsinline preload="metadata" aria-hidden="true">
-        <source src="Herovideo.mp4" type="video/mp4" />
-      </video>
-      <!-- Crisp containment foreground -->
-      <video class="video-fg-main" autoplay muted loop playsinline preload="metadata" aria-hidden="true" id="hero-video">
-        <source src="Herovideo.mp4" type="video/mp4" />
-      </video>
-    </div>
+  <section id="home" aria-label="Hero section" class="hero-split-layout">
+  
+  <!-- Top: Pristine Video Container -->
+  <div class="hero-video-wrap">
+    <!-- Ambient blurred backdrop (Desktop only) -->
+    <video class="video-bg-ambient hidden md:block" autoplay muted loop playsinline preload="metadata" aria-hidden="true">
+      <source src="Herovideo.mp4" type="video/mp4" />
+    </video>
+    <!-- Crisp containment foreground -->
+    <video class="video-fg-main" autoplay muted loop playsinline preload="metadata" aria-hidden="true" id="hero-video">
+      <source src="Herovideo.mp4" type="video/mp4" />
+    </video>
+  </div>
 
-    <!-- Overlays: These will fade in together with the text to prevent dimming the video early -->
-    <div class="hero-overlay deferred-reveal" aria-hidden="true"></div>
-    <div class="hero-overlay-gold deferred-reveal" aria-hidden="true"></div>
+  <!-- Decorative elements kept out of the video bounds -->
+  <div class="particles" id="particles" aria-hidden="true"></div>
 
-    <div class="blob blob-1 deferred-reveal" aria-hidden="true"></div>
-    <div class="blob blob-2 deferred-reveal" aria-hidden="true"></div>
-
-    <div class="particles deferred-reveal" id="particles" aria-hidden="true"></div>
-
-    <!-- Content Container: Delayed entrance for maximum impact -->
-    <div class="hero-content deferred-reveal" id="hero-parallax-content">
+  <!-- Bottom: Pure Copy Section (No video overlay) -->
+  <div class="hero-content-bottom">
+    <div class="hero-content-inner">
       <div class="hero-eyebrow" aria-hidden="true">
         <span>Handcrafted Journeys</span>
       </div>
       <h1 class="hero-title">
-        Journey Beyond<br/>
-        the <span class="gold-word italic">Ordinary</span>
+        Journey Beyond the <span class="gold-word italic">Ordinary</span>
       </h1>
       <p class="hero-subtitle">
         Arappurayil crafts custom travel experiences — from Kerala's tranquil backwaters to the high snow peaks of Kashmir and Sikkim.
@@ -1290,11 +1374,8 @@ div.hero-overlay-gold.deferred-reveal {
         </a>
       </div>
     </div>
+  </div>
 
-    <div class="scroll-indicator deferred-reveal" aria-hidden="true">
-      <span class="scroll-text">Scroll</span>
-      <div class="scroll-line"></div>
-    </div>
 </section>
 
 <div class="divider" aria-hidden="true"></div>
